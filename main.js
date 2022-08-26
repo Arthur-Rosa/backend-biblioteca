@@ -1,6 +1,7 @@
 const express = require("express");
 const { app, BrowserWindow, ipcMain } = require("electron");
 const path = require("path");
+const Withdraw = require("./config/db/models/Withdraw");
 require("dotenv").config();
 
 const port = process.env.PORT || "3000";
@@ -21,9 +22,10 @@ App.listen(port, () => {
 
 function createWindow() {
   const win = new BrowserWindow({
-    width: 800,
-    height: 600,
+    width: 1440,
+    height: 1080,
     show: false,
+    icon: path.join(__dirname, "assets", "logo.png"),
     webPreferences: {
       nodeIntegration: true,
       preload: path.join(__dirname, "frontend-biblioteca", "js", "preload.js"),
@@ -55,6 +57,11 @@ app.on("activate", () => {
   }
 });
 
-ipcMain.on("search_student", (e, value) => {
-  console.log(value);
+ipcMain.on("search_student", async (e, value) => {
+  const studentSearch = await Withdraw.find({ name: value });
+  if (!studentSearch.length) {
+    console.log("não achei nada");
+    return;
+  }
+  return studentSearch;
 });
