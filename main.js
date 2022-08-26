@@ -28,11 +28,11 @@ function createWindow() {
     icon: path.join(__dirname, "assets", "logo.png"),
     webPreferences: {
       nodeIntegration: true,
-      preload: path.join(__dirname, "frontend-biblioteca", "js", "preload.js"),
+      preload: path.join(__dirname, "frontend", "js", "preload.js"),
     },
   });
 
-  win.loadFile(path.join(__dirname, "frontend-biblioteca", "index.html"));
+  win.loadFile(path.join(__dirname, "frontend", "index.html"));
 
   win.once("ready-to-show", () => {
     win.show();
@@ -57,11 +57,23 @@ app.on("activate", () => {
   }
 });
 
-ipcMain.on("search_student", async (e, value) => {
-  const studentSearch = await Withdraw.find({ name: value });
+ipcMain.handle("get-all-data", async (e, value) => {
+  const data = await Withdraw.find();
+  if (!data.length) {
+    return "nada";
+  }
+  console.log(data);
+  return data;
+});
+
+ipcMain.handle("search_student", async (e, value) => {
+  const studentSearch = await Withdraw.find({
+    name: { $regex: ".*" + value + ".*" },
+  });
   if (!studentSearch.length) {
     console.log("não achei nada");
-    return;
+
+    return "Nenhum dado Encontrado";
   }
   return studentSearch;
 });

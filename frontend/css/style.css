@@ -1,0 +1,377 @@
+* {
+  font-family: Verdana, Geneva, Tahoma, sans-serif;
+}
+
+.modal {
+  background-color: rgba(0, 0, 0, 0.9);
+  position: absolute;
+  z-index: 1;
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.modal .close {
+  position: absolute;
+  top: 0;
+  right: 0;
+  color: white;
+  font-size: 1.3rem;
+  font-weight: 700;
+  cursor: pointer;
+  padding: 30px;
+  transition: 0.5s;
+}
+
+.modal .close:hover {
+  background: red;
+}
+
+.modal_content {
+  width: 35%;
+  display: flex;
+  gap: 1rem;
+  flex-direction: column;
+}
+
+.modal_content span {
+  color: #ccc;
+}
+
+.modal_content input[type="text"] {
+  border: 1px solid dodgerblue;
+  padding: 3px 5px;
+  font-size: 1rem;
+  outline: none;
+}
+
+.modal_close {
+  display: none;
+}
+
+body {
+  background-color: rgb(255, 255, 255);
+}
+.container {
+  width: 80%;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.content {
+  width: 100%;
+  display: flex;
+}
+
+.button-group {
+  width: 19%;
+  display: flexbox;
+}
+
+.button-group button {
+  padding: 25px;
+  width: 200px;
+  margin-top: 10px;
+  margin-bottom: 5px;
+  margin-left: 10px;
+  border-radius: 15px;
+  border: none;
+  cursor: pointer;
+  box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+}
+
+.card-group {
+  width: 80%;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+}
+
+.card-group .card {
+  width: 25%;
+  border-radius: 15px;
+  margin-top: 20px;
+  margin-right: 50px;
+  box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+  height: 120px;
+  background-color: white;
+  padding: 10px;
+}
+
+.card .icon {
+  font-size: 36px;
+  margin-left: 15px;
+  margin-top: 15px;
+}
+
+.flex {
+  justify-content: space-between;
+  width: 90%;
+  display: flex;
+}
+
+.ul-description {
+  font-size: 18px;
+  list-style: none;
+}
+
+.edt {
+  font-size: 28px;
+  margin-left: 75%;
+}
+
+.search {
+  width: 100%;
+  margin-top: 20px;
+  margin-bottom: 20px;
+}
+
+.search button,
+.search input[type="search"] {
+  padding: 25px;
+  width: 200px;
+  margin-top: 10px;
+  margin-bottom: 5px;
+  border-radius: 15px;
+  border: none;
+  cursor: pointer;
+  box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+}
+
+.search input[type="search"] {
+  width: 79%;
+}
+
+.filtros {
+  width: 10%;
+}
+
+.table {
+  width: 80%;
+  text-align: center;
+  overflow: auto;
+}
+
+.filtros button {
+  padding: 25px;
+  width: 200px;
+  margin-top: 10px;
+  margin-bottom: 5px;
+  border-radius: 15px;
+  border: none;
+  cursor: pointer;
+  box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+}
+
+.list {
+  width: 100%;
+}
+
+td,
+th {
+  width: 200px;
+}
+
+.table {
+  height: 600px;
+  overflow-y: scroll;
+}
+
+.table::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+.table::-webkit-scrollbar-track {
+  border-radius: 10px;
+  background: rgba(0, 0, 0, 0.1);
+}
+.table::-webkit-scrollbar-thumb {
+  border-radius: 10px;
+  background: rgba(0, 0, 0, 0.2);
+}
+.table::-webkit-scrollbar-thumb:hover {
+  background: rgba(0, 0, 0, 0.4);
+}
+.table::-webkit-scrollbar-thumb:active {
+  background: rgba(0, 0, 0, 0.9);
+}
+
+tbody tr,
+tbody tr td {
+  padding: 20px;
+  background-color: #efefef !important;
+}
+.edt-btn {
+  width: 80px;
+  padding: 10px;
+  font-size: 16px;
+  cursor: pointer;
+  font-weight: bold;
+  background-color: rgb(246, 175, 41);
+  border: none;
+  box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+}
+
+.del-btn {
+  width: 80px;
+  padding: 10px;
+  font-size: 16px;
+  font-weight: bold;
+  cursor: pointer;
+  background-color: rgb(237, 29, 29);
+  border: none;
+  box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+}
+
+.filtro-btn-retirada {
+  font-size: 18px;
+  width: 80px;
+  padding: 10px;
+  font-weight: bold;
+  cursor: pointer;
+  background-color: rgb(80, 174, 251);
+  box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+}
+
+.filtro-btn-livros {
+  font-size: 18px;
+  width: 80px;
+  padding: 10px;
+  font-weight: bold;
+  cursor: pointer;
+  background-color: rgb(80, 251, 114);
+  box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+}
+
+.search-button {
+  font-size: 16px;
+  width: 80px;
+  padding: 10px;
+  cursor: pointer;
+  font-weight: bold;
+  background-color: rgb(62, 192, 27);
+  box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+}
+
+.new-btn-retirada {
+  font-size: 18px;
+  width: 80px;
+  padding: 10px;
+  font-weight: bold;
+  cursor: pointer;
+  background-color: rgb(33, 126, 202);
+  box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+}
+
+.new-btn-retirada:hover {
+  background-color: rgb(81, 155, 216);
+}
+
+.new-btn-book {
+  font-size: 18px;
+  width: 80px;
+  padding: 10px;
+  font-weight: bold;
+  cursor: pointer;
+  background-color: rgb(57, 136, 73);
+  box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+}
+
+.new-btn-book:hover {
+  background-color: rgb(104, 192, 122);
+}
+
+input[type="search"] {
+  font-size: 18px;
+}
+
+.andamento {
+  font-weight: bold;
+}
+@media only screen and (max-width: 1440px) {
+  .table {
+    width: 90%;
+  }
+  body {
+    width: 90%;
+  }
+  .container {
+    width: 80%;
+  }
+  .filtros {
+    width: 30%;
+  }
+  .card-group {
+    margin-left: 50px;
+    width: 100%;
+  }
+  .card-group .card {
+    width: 23%;
+    padding: 5px;
+    height: 100px;
+  }
+  .edt {
+    font-size: 18px;
+  }
+  .ul-description,
+  .icon {
+    font-size: 14px;
+  }
+  input[type="search"] {
+    width: 60% !important;
+  }
+  tbody tr,
+  tbody tr td {
+    padding: 5px;
+    background-color: #efefef !important;
+  }
+}
+
+@media only screen and (max-width: 1300px) {
+  .table {
+    width: 100%;
+  }
+  body {
+    width: 90%;
+  }
+  .container {
+    width: 80%;
+  }
+  .filtros {
+    width: 30%;
+  }
+  .card-group {
+    margin-left: 50px;
+    width: 100%;
+  }
+  .card-group .card {
+    width: 24%;
+    padding: 0px;
+    height: 100px;
+  }
+  .edt {
+    font-size: 12px;
+  }
+  .ul-description,
+  .icon {
+    font-size: 12px;
+  }
+  input[type="search"] {
+    width: 60% !important;
+  }
+  tbody tr,
+  tbody tr td {
+    padding: 0px;
+    background-color: #efefef !important;
+  }
+  .list {
+    width: 1000px;
+  }
+
+  .table {
+    height: 300px;
+    overflow-y: scroll;
+  }
+}
