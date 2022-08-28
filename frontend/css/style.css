@@ -5,6 +5,11 @@
   font-family: Verdana, Geneva, Tahoma, sans-serif;
 }
 
+a {
+  color: black;
+  text-decoration: none;
+}
+
 body {
   overflow-y: hidden;
 }
@@ -152,7 +157,7 @@ body {
   justify-content: space-between;
 }
 
-.card-group .card {
+.card {
   width: 25%;
   border-radius: 15px;
   margin-top: 20px;
@@ -161,8 +166,33 @@ body {
   height: 120px;
   background-color: white;
   padding: 10px;
+  cursor: pointer;
 }
 
+.card-focus-1 {
+  box-shadow: rgb(57, 136, 73) 0px 5px 15px !important;
+}
+.card-focus-2 {
+  box-shadow: rgb(177, 177, 13) 0px 5px 15px !important;
+}
+.card-focus-3 {
+  box-shadow: rgb(143, 13, 13) 0px 5px 15px !important;
+}
+.card-hover-1:hover {
+  transition-timing-function: ease;
+  transition-duration: 0.7s;
+  box-shadow: rgb(57, 136, 73) 0px 20px 30px -10px !important;
+}
+.card-hover-2:hover {
+  transition-timing-function: ease;
+  transition-duration: 0.7s;
+  box-shadow: rgb(177, 177, 13) 0px 20px 30px -10px !important;
+}
+.card-hover-3:hover {
+  transition-timing-function: ease;
+  transition-duration: 0.7s;
+  box-shadow: rgb(143, 13, 13) 0px 20px 30px -10px !important;
+}
 .card .icon {
   font-size: 36px;
   margin-left: 15px;
@@ -406,7 +436,7 @@ input[type="search"] {
     margin-left: 50px;
     width: 100%;
   }
-  .card-group .card {
+  .card {
     width: 23%;
     padding: 5px;
     height: 100px;
@@ -442,7 +472,7 @@ input[type="search"] {
     margin-left: 50px;
     width: 100%;
   }
-  .card-group .card {
+  .card {
     width: 26.6%;
     padding: 15px;
     height: 100px;

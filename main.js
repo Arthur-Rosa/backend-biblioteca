@@ -36,10 +36,10 @@ function createWindow() {
 
   win.once("ready-to-show", () => {
     win.show();
-
+    /* 
     const menuTemplate = [];
     const menu = Menu.buildFromTemplate(menuTemplate);
-    Menu.setApplicationMenu(menu);
+    Menu.setApplicationMenu(menu); */
   });
 }
 
@@ -67,6 +67,27 @@ ipcMain.handle("get-all-data", async (e, value) => {
   return data;
 });
 
+ipcMain.handle("get-one-data", async (e, value) => {
+  const data = await Withdraw.find({
+    sit: 1,
+  });
+  console.log(data);
+  if (!data.length) {
+    return null;
+  }
+  return data;
+});
+
+ipcMain.handle("get-two-data", async (e, value) => {
+  const data = await Withdraw.find({
+    sit: 2,
+  });
+  if (!data.length) {
+    return null;
+  }
+  return data;
+});
+
 ipcMain.on("search_student", async (e, value) => {
   const studentSearch = await Withdraw.find({ name: value });
   if (!studentSearch.length) {
@@ -82,6 +103,7 @@ ipcMain.on("data_student", async (e, value) => {
     class: value.serie,
     book: value.book,
     date: value.finalDate,
+    sit: 1,
   });
 
   try {
