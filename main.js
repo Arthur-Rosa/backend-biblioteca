@@ -1,8 +1,8 @@
+require("dotenv").config();
+const { app, BrowserWindow, ipcMain, Menu } = require("electron");
 const express = require("express");
-const { app, BrowserWindow, ipcMain } = require("electron");
 const path = require("path");
 const Withdraw = require("./config/db/models/Withdraw");
-require("dotenv").config();
 
 const port = process.env.PORT || "3000";
 const App = express();
@@ -36,9 +36,11 @@ function createWindow() {
 
   win.once("ready-to-show", () => {
     win.show();
-  });
 
-  win.webContents.send("aaaa", "sua mãe");
+    const menuTemplate = [];
+    const menu = Menu.buildFromTemplate(menuTemplate);
+    Menu.setApplicationMenu(menu);
+  });
 }
 
 app.whenReady().then(() => {
@@ -60,20 +62,62 @@ app.on("activate", () => {
 ipcMain.handle("get-all-data", async (e, value) => {
   const data = await Withdraw.find();
   if (!data.length) {
-    return "nada";
+    return null;
   }
-  console.log(data);
   return data;
 });
 
-ipcMain.handle("search_student", async (e, value) => {
-  const studentSearch = await Withdraw.find({
-    name: { $regex: ".*" + value + ".*" },
-  });
+ipcMain.on("search_student", async (e, value) => {
+  const studentSearch = await Withdraw.find({ name: value });
   if (!studentSearch.length) {
     console.log("não achei nada");
-
-    return "Nenhum dado Encontrado";
+    return null;
   }
-  return studentSearch;
+  return console.log(studentSearch);
+});
+
+ipcMain.on("data_student", async (e, value) => {
+  const student = new Withdraw({
+    name: value.name,
+    class: value.serie,
+    book: value.book,
+    date: value.finalDate,
+  });
+
+  try {
+    const savedStudent = await student.save();
+    return savedStudent;
+  } catch (error) {
+    console.log("Erro ao salvar aluno no banco");
+    return;
+  }
+});
+
+ipcMain.on("delete_student", async (e, value) => {
+  const student = await Withdraw.findOne({ name: value });
+  console.log(student);
+  try {
+    const delStudent = await Withdraw.findByIdAndDelete(student._id);
+    console.log("deletado!");
+  } catch (error) {
+    console.log("erro ao apagar aluno");
+    return;
+  }
+});
+
+ipcMain.on("student_update", async (e, value) => {
+  const student = await Withdraw.findOne({ name: value.nameUp });
+  console.log("estudante é", student);
+  try {
+    const studentUp = await Withdraw.findByIdAndUpdate(student._id, {
+      name: value.nameUp,
+      class: value.serieUp,
+      book: value.bookUp,
+      date: value.finalDateEdit,
+    });
+    console.log("ATUALIZADO!");
+  } catch (error) {
+    console.log("erro ao atualizar aluno");
+    return;
+  }
 });

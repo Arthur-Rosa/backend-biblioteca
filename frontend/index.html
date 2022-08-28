@@ -26,6 +26,9 @@
     <div class="modal modal_close">
       <span class="close">X</span>
       <div class="modal_content">
+        <!-- Validation error -->
+        <div class="unfield"><span>Preencha todos os campos</span></div>
+
         <input type="text" placeholder="Nome do aluno" id="name_student" />
         <input
           type="text"
@@ -33,12 +36,40 @@
           maxlength="2"
           id="class_student"
         />
-        <input type="search" placeholder="Nome do livro" id="book" />
+        <input type="text" placeholder="Nome do livro" id="book" />
         <span>Data da devolução</span>
         <input type="date" id="date" />
         <button class="add_modal" id="sendDataStudent">Adicionar</button>
       </div>
     </div>
+    <!-- Modal edit button -->
+    <div class="modal_edit_container modal_close">
+      <span class="close_edit" id="close_edit"> X </span>
+      <div class="modal_edit">
+        <input
+          type="text"
+          id="name_edit"
+          placeholder="Editar nome do aluno"
+          disabled
+        />
+        <input
+          type="text"
+          id="serie_edit"
+          placeholder="Editar serie"
+          maxlength="2"
+        />
+        <input
+          type="text"
+          id="book_edit"
+          placeholder="Editar título do livro"
+        />
+        <span>Edite a data de entrega</span>
+        <input type="date" id="finalDate_edit" />
+        <button id="sendDataChanged" class="update_modal">Atualizar</button>
+      </div>
+    </div>
+    <!-- end Modal edit button -->
+    <!-- end Modal -->
     <div class="container">
       <div class="content">
         <div class="button-group">
@@ -93,10 +124,18 @@
             <hr />
           </div>
           <div class="search">
-            <button class="search-button">
+            <button class="search-button" id="search-button">
               <i class="fa-solid fa-magnifying-glass"></i> Buscar
             </button>
-            <input type="search" placeholder="Faça sua Busca Aqui..." />
+            <input
+              type="search"
+              placeholder="Faça sua Busca Aqui..."
+              id="inp_search"
+            />
+
+            <div class="refresh" onclick="window.location.reload()">
+              <i class="fa-solid fa-rotate-right"></i>
+            </div>
           </div>
         </div>
       </div>
