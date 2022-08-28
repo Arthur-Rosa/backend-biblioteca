@@ -5,6 +5,16 @@
   font-family: Verdana, Geneva, Tahoma, sans-serif;
 }
 
+body {
+  overflow-y: hidden;
+}
+
+.img_logo {
+  position: relative;
+  width: 100px;
+  left: 1000px;
+}
+
 .modal {
   background-color: rgba(0, 0, 0, 0.9);
   position: absolute;
@@ -105,7 +115,7 @@
 }
 
 body {
-  background-color: rgb(255, 255, 255);
+  background-color: #78ceff;
 }
 .container {
   width: 80%;
@@ -297,6 +307,9 @@ tbody tr td {
   box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
 }
 
+.edt-btn:hover {
+  background-color: rgb(252, 202, 109);
+}
 .del-btn {
   width: 80px;
   padding: 10px;
@@ -307,7 +320,9 @@ tbody tr td {
   border: none;
   box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
 }
-
+.del-btn:hover {
+  background-color: rgb(236, 65, 65);
+}
 .filtro-btn-retirada {
   font-size: 18px;
   width: 80px;
@@ -381,9 +396,6 @@ input[type="search"] {
   .table {
     width: 90%;
   }
-  body {
-    width: 90%;
-  }
   .container {
     width: 80%;
   }
@@ -406,9 +418,9 @@ input[type="search"] {
   .icon {
     font-size: 14px;
   }
-  input[type="search"] {
+  /* input[type="search"] {
     width: 60% !important;
-  }
+  } */
   tbody tr,
   tbody tr td {
     padding: 5px;
@@ -419,9 +431,6 @@ input[type="search"] {
 @media only screen and (max-width: 1300px) {
   .table {
     width: 100%;
-  }
-  body {
-    width: 90%;
   }
   .container {
     width: 80%;
@@ -434,20 +443,21 @@ input[type="search"] {
     width: 100%;
   }
   .card-group .card {
-    width: 24%;
-    padding: 0px;
+    width: 26.6%;
+    padding: 15px;
     height: 100px;
   }
   .edt {
-    font-size: 12px;
+    font-size: 16px;
   }
   .ul-description,
   .icon {
-    font-size: 12px;
+    margin-left: 40px;
+    font-size: 16px;
   }
-  input[type="search"] {
+  /* input[type="search"] {
     width: 60% !important;
-  }
+  } */
   tbody tr,
   tbody tr td {
     padding: 0px;
@@ -458,7 +468,16 @@ input[type="search"] {
   }
 
   .table {
-    height: 300px;
+    height: 250px !important;
     overflow-y: scroll;
   }
+}
+
+.refresh i:hover {
+  color: white;
+  cursor: pointer;
+}
+
+.search-button:hover {
+  background-color: rgb(96, 228, 60);
 }

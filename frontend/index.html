@@ -65,20 +65,27 @@
         />
         <span>Edite a data de entrega</span>
         <input type="date" id="finalDate_edit" />
-        <button id="sendDataChanged" class="update_modal">Atualizar</button>
+        <button
+          id="sendDataChanged"
+          style="cursor: pointer"
+          class="update_modal"
+        >
+          Atualizar
+        </button>
       </div>
     </div>
     <!-- end Modal edit button -->
     <!-- end Modal -->
+    <img class="img_logo" src="img/logo.png" />
     <div class="container">
       <div class="content">
         <div class="button-group">
           <button class="new-btn-retirada button_modal">
             <i class="fa-solid fa-list-check"></i> Nova Retirada
           </button>
-          <button class="new-btn-book">
+          <!-- <button class="new-btn-book">
             <i class="fa-solid fa-book-open"></i> Novo Livro
-          </button>
+          </button> -->
         </div>
         <div class="card-group">
           <div class="card">
@@ -93,7 +100,6 @@
                 </ul>
               </div>
             </div>
-            <hr />
           </div>
           <div class="card">
             <div class="flex">
@@ -107,7 +113,6 @@
                 </ul>
               </div>
             </div>
-            <hr />
           </div>
           <div class="card">
             <div class="flex">
@@ -121,35 +126,34 @@
                 </ul>
               </div>
             </div>
-            <hr />
           </div>
-          <div class="search">
-            <button class="search-button" id="search-button">
-              <i class="fa-solid fa-magnifying-glass"></i> Buscar
-            </button>
-            <input
-              type="search"
-              placeholder="Faça sua Busca Aqui..."
-              id="inp_search"
-            />
+        </div>
+      </div>
+      <div class="search">
+        <button class="search-button" id="search-button">
+          <i class="fa-solid fa-magnifying-glass"></i> Buscar
+        </button>
+        <input
+          type="search"
+          placeholder="Faça sua Busca Aqui..."
+          id="inp_search"
+        />
 
-            <div class="refresh" onclick="window.location.reload()">
-              <i class="fa-solid fa-rotate-right"></i>
-            </div>
-          </div>
+        <div class="refresh" onclick="window.location.reload()">
+          <i class="fa-solid fa-rotate-right"></i>
         </div>
       </div>
       <div class="list">
         <hr />
-        <div class="flex">
-          <div class="filtros" style="text-align: center">
+        <div style="width: 100%" class="flex">
+          <!-- <div class="filtros" style="text-align: center">
             <button class="filtro-btn-retirada">
               <i class="fa-solid fa-truck-arrow-right"></i> Retiradas
             </button>
             <button class="filtro-btn-livros">
               <i class="fa-solid fa-book"></i> Livros
             </button>
-          </div>
+          </div> -->
           <div class="table">
             <table>
               <thead>
