@@ -214,7 +214,7 @@ body {
 .table {
   width: 80%;
   text-align: center;
-  overflow: auto;
+  overflow-y: scroll;
 }
 
 .filtros button {
@@ -235,11 +235,6 @@ body {
 td,
 th {
   width: 200px;
-}
-
-.table {
-  height: auto;
-  overflow-y: scroll;
 }
 
 .modal_edit_container {
