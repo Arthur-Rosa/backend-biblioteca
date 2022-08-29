@@ -5,6 +5,7 @@ const withdraw = new Schema({
   class: { type: String, required: true },
   book: { type: String, required: true },
   date: { type: String, required: true },
+  sit: { type: String, required: true },
 });
 
 module.exports = model("Withdraw", withdraw);
