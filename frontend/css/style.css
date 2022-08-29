@@ -105,6 +105,22 @@ body {
   color: rgb(177, 177, 13);
 }
 
+.update_modal_conc {
+  background: rgb(40, 177, 13);
+  color: #fff;
+  border: 1px solid transparent;
+  padding: 6px;
+  cursor: pointer;
+  transition: 0.3s ease-out;
+  font-weight: bold;
+}
+
+.update_modal_conc:hover {
+  border-color: rgb(13, 177, 13);
+  background: white;
+  color: rgb(13, 177, 13);
+}
+
 .close_edit {
   position: absolute;
   color: white;
@@ -498,7 +514,7 @@ input[type="search"] {
   }
 
   .table {
-    height: 250px !important;
+    height: 200px !important;
     overflow-y: scroll;
   }
 }

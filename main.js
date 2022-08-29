@@ -67,6 +67,35 @@ ipcMain.handle("get-all-data", async (e, value) => {
   return data;
 });
 
+ipcMain.handle("update_dashboard", async (e, value) => {
+  try {
+    const data = await Withdraw.find();
+    var a = 0;
+    var b = 0;
+    var c = 0;
+    data.forEach((e) => {
+      if (e.sit == 1) {
+        a++;
+      }
+      if (e.sit == 2) {
+        b++;
+      }
+      if (e.sit == 3) {
+        c++;
+      }
+    });
+    var obj = {
+      a: a,
+      b: b,
+      c: c,
+    };
+    return obj;
+  } catch (error) {
+    console.log(error);
+    return "deu ruim";
+  }
+});
+
 ipcMain.handle("get-one-data", async (e, value) => {
   const data = await Withdraw.find({
     sit: 1,
@@ -78,9 +107,110 @@ ipcMain.handle("get-one-data", async (e, value) => {
   return data;
 });
 
+ipcMain.on("update_withdraw_status_conc", async (e, value) => {
+  try {
+    const st = await Withdraw.findOne({ name: value.nameUp });
+
+    console.log(st);
+
+    if (!st) {
+      console.log("err update data");
+      return;
+    }
+
+    var obj = {
+      id: st._id,
+      name: st.name,
+      class: st.class,
+      book: st.book,
+      date: st.date,
+      sit: 3,
+    };
+
+    const fnln = await Withdraw.findByIdAndUpdate(st._id, obj);
+
+    if (!fnln) {
+      return;
+    }
+
+    console.log("uodate hour : " + fnln);
+
+    return fnln;
+  } catch (e) {
+    console.log("err 500 : " + e);
+    return;
+  }
+});
+
+ipcMain.handle("update_withdraw_status", async (e, value) => {
+  const data = await Withdraw.find();
+  data.forEach((e) => {
+    try {
+      const dataObj = new Date(e.date);
+      const dataAtual = new Date();
+      var x =
+        dataObj.getUTCFullYear() +
+        "/" +
+        (dataObj.getUTCMonth() + 1) +
+        "/" +
+        dataObj.getUTCDate();
+      var y = dataAtual.getUTCFullYear();
+      +"/" + (dataAtual.getUTCMonth() + 1) + "/" + dataAtual.getUTCDate();
+      if (x < y && e.sit == 1) {
+        var obj = {
+          id: e._id,
+          name: e.name,
+          class: e.class,
+          book: e.book,
+          date: e.date,
+          sit: 2,
+        };
+
+        const d = updateObj(obj);
+        console.log(d);
+        if (!data) {
+          console.log("Ocorreu um erro ao atualizar a data");
+          return;
+        }
+
+        return d;
+      }
+    } catch (e) {
+      console.log("update error : " + e);
+      return;
+    }
+  });
+});
+
+const updateObj = async (o) => {
+  try {
+    const data = await Withdraw.findByIdAndUpdate(o.id, o);
+
+    if (!data) {
+      console.log("Ocorreu um erro ao atualizar a sit");
+      return;
+    }
+
+    return data;
+  } catch (e) {
+    console.log("updt sit : " + e);
+    return;
+  }
+};
+
 ipcMain.handle("get-two-data", async (e, value) => {
   const data = await Withdraw.find({
     sit: 2,
+  });
+  if (!data.length) {
+    return null;
+  }
+  return data;
+});
+
+ipcMain.handle("get-tree-data", async (e, value) => {
+  const data = await Withdraw.find({
+    sit: 3,
   });
   if (!data.length) {
     return null;
@@ -98,20 +228,61 @@ ipcMain.on("search_student", async (e, value) => {
 });
 
 ipcMain.on("data_student", async (e, value) => {
-  const student = new Withdraw({
-    name: value.name,
-    class: value.serie,
-    book: value.book,
-    date: value.finalDate,
-    sit: 1,
-  });
+  console.log(value);
+  const dataObj = new Date(value.finalDate);
+  const dataAtual = new Date();
+  /* console.log(
+    dataObj.getUTCDate() +
+      "/" +
+      (dataObj.getUTCMonth() + 1) +
+      "/" +
+      dataObj.getUTCFullYear()
+  );
+  console.log(
+    dataAtual.getUTCDate() +
+      "/" +
+      (dataAtual.getUTCMonth() + 1) +
+      "/" +
+      dataAtual.getUTCFullYear()
+  );
+  if (
+    dataObj.getUTCDate() +
+      "/" +
+      (dataObj.getUTCMonth() + 1) +
+      "/" +
+      dataObj.getUTCFullYear() <=
+    dataAtual.getUTCDate() +
+      "/" +
+      (dataAtual.getUTCMonth() + 1) +
+      "/" +
+      dataAtual.getUTCFullYear()
+  ) {
+    console.log("aaaaaaaaaaaaaaaa data inválida");
+    return "Data Inválida";
+  } */
+  // Validando Dia Escolhido
+  if (dataObj.getUTCDay() == 0 || dataObj.getUTCDay() == 6) {
+    return "Indisponível ao Final de Semana";
+  }
 
+  // Criando Retirada
   try {
-    const savedStudent = await student.save();
-    return savedStudent;
-  } catch (error) {
-    console.log("Erro ao salvar aluno no banco");
-    return;
+    const obj = await Withdraw.create({
+      name: value.name,
+      class: value.serie,
+      book: value.book,
+      date: value.finalDate,
+      sit: 1,
+    });
+    // Verificando se Salvou Corretamente
+    if (!obj) {
+      return "Ocorreu um Erro ao Salvar";
+    }
+    // Retorna Retirada
+    return obj;
+  } catch (e) {
+    console.log(e);
+    return "Error 500";
   }
 });
 
@@ -127,6 +298,7 @@ ipcMain.on("delete_student", async (e, value) => {
   }
 });
 
+/* Atualizar precisa de nova lógica */
 ipcMain.on("student_update", async (e, value) => {
   const student = await Withdraw.findOne({ name: value.nameUp });
   console.log("estudante é", student);
