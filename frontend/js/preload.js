@@ -1,10 +1,9 @@
 window.addEventListener("DOMContentLoaded", async () => {
-  const { ipcRenderer, ipcMain } = require("electron");
+  const { ipcRenderer } = require("electron");
   const changeModal = document.querySelector(".button_modal");
   const closeModal = document.querySelector(".close");
   const modal = document.querySelector(".modal");
 
-  await ipcRenderer.invoke("update_withdraw_status");
   function toggleModal(modal) {
     if (modal.classList.contains("modal_close")) {
       modal.classList.remove("modal_close");
@@ -46,9 +45,21 @@ window.addEventListener("DOMContentLoaded", async () => {
     toggleModal(modal_edit);
   });
 
+  // send data
   let data;
 
-  // send data
+  let today = new Date();
+
+  let current_day = today.getDate();
+  let current_month = today.getMonth();
+  let current_year = today.getFullYear();
+
+  let all =
+    current_year.toString() +
+    "-" +
+    (current_month + 1).toString() +
+    "-" +
+    current_day.toString();
 
   // search student
   const inpSearch = document.querySelector("#inp_search");
@@ -69,6 +80,7 @@ window.addEventListener("DOMContentLoaded", async () => {
       name: name_student.value,
       serie: serie.value,
       book: book.value,
+      dateInit: all,
       finalDate: finalDate.value,
     };
 
@@ -97,7 +109,7 @@ window.addEventListener("DOMContentLoaded", async () => {
   });
 
   const dsh = await ipcRenderer.invoke("update_dashboard");
-
+  console.log(dsh);
   if (dsh.a == 0) {
     document.getElementById("and").textContent = "0";
   } else {
@@ -129,6 +141,7 @@ window.addEventListener("DOMContentLoaded", async () => {
 
   var dataChange = document.getElementById("page").textContent;
   console.log(dataChange);
+
   if (dataChange == "index") {
     const dataAll = await ipcRenderer.invoke("get-all-data");
 
@@ -141,7 +154,7 @@ window.addEventListener("DOMContentLoaded", async () => {
     }
 
     dataAll.forEach((e) => {
-      console.log(e._doc._id);
+      console.log(e._doc);
       const back = document.getElementById("tbody");
       const t = document.createElement("tr");
       // nome
@@ -157,23 +170,6 @@ window.addEventListener("DOMContentLoaded", async () => {
       // entrega date
       const thRE = document.createElement("td");
 
-      let today = new Date();
-
-      let current_day = today.getDate();
-      let current_month = today.getMonth();
-      let current_year = today.getFullYear();
-
-      if (current_month <= 9) {
-        current_month = "0" + current_month;
-      }
-
-      let all =
-        current_day.toString() +
-        "/" +
-        current_month.toString() +
-        "/" +
-        current_year.toString();
-
       thN.textContent = e._doc.name;
       thS.textContent = e._doc.class;
       thB.textContent = e._doc.book;
@@ -188,7 +184,7 @@ window.addEventListener("DOMContentLoaded", async () => {
         __v = "Devolvido";
       }
       thSS.textContent = __v;
-      thRR.textContent = all;
+      thRR.textContent = e._doc.initD;
       thRE.textContent = e._doc.date;
 
       const tdBtnEdit = document.createElement("td");

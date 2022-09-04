@@ -13,6 +13,7 @@ connectDb();
 
 App.use(cors());
 App.use(express.json());
+
 // router fazer
 const router = require("./router/Router");
 App.use(router);
@@ -34,12 +35,40 @@ function createWindow() {
 
   win.loadFile(path.join(__dirname, "frontend", "index.html"));
 
-  win.once("ready-to-show", () => {
+  win.once("ready-to-show", async () => {
     win.show();
     /* 
     const menuTemplate = [];
     const menu = Menu.buildFromTemplate(menuTemplate);
     Menu.setApplicationMenu(menu); */
+
+    const students = await Withdraw.find();
+
+    if (!students.length) {
+      console.log("Não há estudantes para mostrar no ready to show");
+      return null;
+    }
+
+    try {
+      students.forEach((s) => {
+        let today = new Date();
+
+        let current_day = today.getDate();
+        let current_month = today.getMonth();
+        let current_year = today.getFullYear();
+
+        let all =
+          current_year.toString() +
+          "-" +
+          (current_month + 1).toString() +
+          "-" +
+          current_day.toString();
+
+        all > s.date ? (s.sit = 3) : (s.sit = s.sit);
+      });
+    } catch (error) {
+      console.log("erro no ready to show", error);
+    }
   });
 }
 
@@ -73,15 +102,16 @@ ipcMain.handle("update_dashboard", async (e, value) => {
     var a = 0;
     var b = 0;
     var c = 0;
-    data.forEach((e) => {
-      if (e.sit == 1) {
+    data.forEach((ev) => {
+      if (ev.sit == 1) {
         a++;
-      }
-      if (e.sit == 2) {
+        return a;
+      } else if (ev.sit == 2) {
         b++;
-      }
-      if (e.sit == 3) {
+        return b;
+      } else if (ev.sit == 3) {
         c++;
+        return c;
       }
     });
     var obj = {
@@ -91,8 +121,8 @@ ipcMain.handle("update_dashboard", async (e, value) => {
     };
     return obj;
   } catch (error) {
-    console.log(error);
-    return "deu ruim";
+    console.log("Erro ao mandar update_dashboard", error);
+    return;
   }
 });
 
@@ -228,61 +258,40 @@ ipcMain.on("search_student", async (e, value) => {
 });
 
 ipcMain.on("data_student", async (e, value) => {
-  console.log(value);
-  const dataObj = new Date(value.finalDate);
-  const dataAtual = new Date();
-  /* console.log(
-    dataObj.getUTCDate() +
-      "/" +
-      (dataObj.getUTCMonth() + 1) +
-      "/" +
-      dataObj.getUTCFullYear()
-  );
-  console.log(
-    dataAtual.getUTCDate() +
-      "/" +
-      (dataAtual.getUTCMonth() + 1) +
-      "/" +
-      dataAtual.getUTCFullYear()
-  );
-  if (
-    dataObj.getUTCDate() +
-      "/" +
-      (dataObj.getUTCMonth() + 1) +
-      "/" +
-      dataObj.getUTCFullYear() <=
-    dataAtual.getUTCDate() +
-      "/" +
-      (dataAtual.getUTCMonth() + 1) +
-      "/" +
-      dataAtual.getUTCFullYear()
-  ) {
-    console.log("aaaaaaaaaaaaaaaa data inválida");
-    return "Data Inválida";
-  } */
-  // Validando Dia Escolhido
-  if (dataObj.getUTCDay() == 0 || dataObj.getUTCDay() == 6) {
-    return "Indisponível ao Final de Semana";
-  }
+  console.log("estudante salvo", value);
 
   // Criando Retirada
+  const obj = new Withdraw({
+    name: value.name,
+    class: value.serie,
+    book: value.book,
+    initD: value.dateInit,
+    date: value.finalDate,
+    sit: 1,
+  });
   try {
-    const obj = await Withdraw.create({
-      name: value.name,
-      class: value.serie,
-      book: value.book,
-      date: value.finalDate,
-      sit: 1,
-    });
-    // Verificando se Salvou Corretamente
-    if (!obj) {
-      return "Ocorreu um Erro ao Salvar";
-    }
-    // Retorna Retirada
-    return obj;
+    const savedObj = await obj.save();
+
+    return savedObj;
   } catch (e) {
-    console.log(e);
-    return "Error 500";
+    console.log("erro ao salvar estudante", e);
+    return;
+  }
+});
+
+// Update corrigido no front
+ipcMain.on("student_update", async (e, value) => {
+  const student = await Withdraw.findOne({ name: value.nameUp });
+  try {
+    const studentUp = await Withdraw.findByIdAndUpdate(student._id, {
+      name: value.nameUp,
+      class: value.serieUp,
+      book: value.bookUp,
+      date: value.finalDateEdit,
+    });
+  } catch (error) {
+    console.log("erro ao atualizar aluno");
+    return;
   }
 });
 
@@ -294,24 +303,6 @@ ipcMain.on("delete_student", async (e, value) => {
     console.log("deletado!");
   } catch (error) {
     console.log("erro ao apagar aluno");
-    return;
-  }
-});
-
-/* Atualizar precisa de nova lógica */
-ipcMain.on("student_update", async (e, value) => {
-  const student = await Withdraw.findOne({ name: value.nameUp });
-  console.log("estudante é", student);
-  try {
-    const studentUp = await Withdraw.findByIdAndUpdate(student._id, {
-      name: value.nameUp,
-      class: value.serieUp,
-      book: value.bookUp,
-      date: value.finalDateEdit,
-    });
-    console.log("ATUALIZADO!");
-  } catch (error) {
-    console.log("erro ao atualizar aluno");
     return;
   }
 });
