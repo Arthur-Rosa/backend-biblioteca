@@ -64,7 +64,7 @@ function createWindow() {
           "-" +
           current_day.toString();
 
-        all > s.date ? (s.sit = 3) : (s.sit = s.sit);
+        all > s.date ? (s.sit = 2) : (s.sit = s.sit);
       });
     } catch (error) {
       console.log("erro no ready to show", error);
