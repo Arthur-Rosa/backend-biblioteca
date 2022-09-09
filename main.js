@@ -50,21 +50,42 @@ function createWindow() {
     }
 
     try {
-      students.forEach((s) => {
+      students.map(async (s) => {
         let today = new Date();
 
         let current_day = today.getDate();
-        let current_month = today.getMonth();
+        let current_month = today.getMonth() + 1;
         let current_year = today.getFullYear();
+
+        if (current_day <= 9) {
+          current_day = "0" + current_day;
+        }
+
+        if (current_month <= 9) {
+          current_month = "0" + current_month;
+        }
 
         let all =
           current_year.toString() +
           "-" +
-          (current_month + 1).toString() +
+          current_month.toString() +
           "-" +
           current_day.toString();
 
-        all > s.date ? (s.sit = 2) : (s.sit = s.sit);
+        async function timeOutStudent(id, sit) {
+          console.log(id, sit);
+          const students_timesup = await Withdraw.findByIdAndUpdate(id, {
+            name: s.name,
+            class: s.class,
+            book: s.book,
+            date: s.date,
+            sit: sit,
+          });
+
+          return students_timesup;
+        }
+
+        all > s.date ? timeOutStudent(s._id, 2) : null;
       });
     } catch (error) {
       console.log("erro no ready to show", error);
@@ -172,62 +193,6 @@ ipcMain.on("update_withdraw_status_conc", async (e, value) => {
   }
 });
 
-ipcMain.handle("update_withdraw_status", async (e, value) => {
-  const data = await Withdraw.find();
-  data.forEach((e) => {
-    try {
-      const dataObj = new Date(e.date);
-      const dataAtual = new Date();
-      var x =
-        dataObj.getUTCFullYear() +
-        "/" +
-        (dataObj.getUTCMonth() + 1) +
-        "/" +
-        dataObj.getUTCDate();
-      var y = dataAtual.getUTCFullYear();
-      +"/" + (dataAtual.getUTCMonth() + 1) + "/" + dataAtual.getUTCDate();
-      if (x < y && e.sit == 1) {
-        var obj = {
-          id: e._id,
-          name: e.name,
-          class: e.class,
-          book: e.book,
-          date: e.date,
-          sit: 2,
-        };
-
-        const d = updateObj(obj);
-        console.log(d);
-        if (!data) {
-          console.log("Ocorreu um erro ao atualizar a data");
-          return;
-        }
-
-        return d;
-      }
-    } catch (e) {
-      console.log("update error : " + e);
-      return;
-    }
-  });
-});
-
-const updateObj = async (o) => {
-  try {
-    const data = await Withdraw.findByIdAndUpdate(o.id, o);
-
-    if (!data) {
-      console.log("Ocorreu um erro ao atualizar a sit");
-      return;
-    }
-
-    return data;
-  } catch (e) {
-    console.log("updt sit : " + e);
-    return;
-  }
-};
-
 ipcMain.handle("get-two-data", async (e, value) => {
   const data = await Withdraw.find({
     sit: 2,
@@ -235,10 +200,11 @@ ipcMain.handle("get-two-data", async (e, value) => {
   if (!data.length) {
     return null;
   }
+  console.log("encontrei um atrasado! ", data);
   return data;
 });
 
-ipcMain.handle("get-tree-data", async (e, value) => {
+ipcMain.handle("get-three-data", async (e, value) => {
   const data = await Withdraw.find({
     sit: 3,
   });
@@ -287,7 +253,7 @@ ipcMain.on("student_update", async (e, value) => {
       name: value.nameUp,
       class: value.serieUp,
       book: value.bookUp,
-      date: value.finalDateEdit,
+      date: value.finalDateUp,
     });
   } catch (error) {
     console.log("erro ao atualizar aluno");

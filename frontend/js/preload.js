@@ -51,13 +51,21 @@ window.addEventListener("DOMContentLoaded", async () => {
   let today = new Date();
 
   let current_day = today.getDate();
-  let current_month = today.getMonth();
+  let current_month = today.getMonth() + 1;
   let current_year = today.getFullYear();
+
+  if (current_day <= 9) {
+    current_day = "0" + current_day;
+  }
+
+  if (current_month <= 9) {
+    current_month = "0" + current_month;
+  }
 
   let all =
     current_year.toString() +
     "-" +
-    (current_month + 1).toString() +
+    current_month.toString() +
     "-" +
     current_day.toString();
 
@@ -211,6 +219,7 @@ window.addEventListener("DOMContentLoaded", async () => {
           bookUp: bookEdit.value,
           finalDateUp: finalDateEdit.value,
         };
+
         ipcRenderer.send("student_update", dataEdit);
         window.location.reload();
       });
@@ -249,7 +258,7 @@ window.addEventListener("DOMContentLoaded", async () => {
     }
 
     dataAll.forEach((e) => {
-      console.log("passou aqui bro" + e._doc._id);
+      console.log(e._doc);
       const back = document.getElementById("tbody");
       const t = document.createElement("tr");
       // nome
@@ -271,20 +280,6 @@ window.addEventListener("DOMContentLoaded", async () => {
       let current_month = today.getMonth();
       let current_year = today.getFullYear();
 
-      if (current_month <= 9) {
-        current_month = "0" + current_month;
-      }
-
-      let all =
-        current_day.toString() +
-        "/" +
-        current_month.toString() +
-        "/" +
-        current_year.toString();
-
-      thN.textContent = e._doc.name;
-      thS.textContent = e._doc.class;
-      thB.textContent = e._doc.book;
       var __v = "";
       if (e._doc.sit == 1) {
         __v = "Em Andamento";
@@ -296,7 +291,10 @@ window.addEventListener("DOMContentLoaded", async () => {
         __v = "Devolvido";
       }
       thSS.textContent = __v;
-      thRR.textContent = all;
+      thN.textContent = e._doc.name;
+      thS.textContent = e._doc.class;
+      thB.textContent = e._doc.book;
+      thRR.textContent = e._doc.initD;
       thRE.textContent = e._doc.date;
 
       const tdBtnEdit = document.createElement("td");
@@ -351,8 +349,9 @@ window.addEventListener("DOMContentLoaded", async () => {
 
   if (dataChange == "2") {
     const dataAll = await ipcRenderer.invoke("get-two-data");
+    console.log("andamento", dataAll);
 
-    if (dataAll == null) {
+    if (!dataAll) {
       document.getElementById("not-exist").style.display = "block";
       document.querySelector("table").style.display = "none";
     } else {
@@ -380,8 +379,12 @@ window.addEventListener("DOMContentLoaded", async () => {
       let today = new Date();
 
       let current_day = today.getDate();
-      let current_month = today.getMonth();
+      let current_month = today.getMonth() + 1;
       let current_year = today.getFullYear();
+
+      if (current_day <= 9) {
+        current_day = "0" + current_day;
+      }
 
       if (current_month <= 9) {
         current_month = "0" + current_month;
@@ -389,9 +392,9 @@ window.addEventListener("DOMContentLoaded", async () => {
 
       let all =
         current_day.toString() +
-        "/" +
+        "-" +
         current_month.toString() +
-        "/" +
+        "-" +
         current_year.toString();
 
       thN.textContent = e._doc.name;
@@ -463,7 +466,7 @@ window.addEventListener("DOMContentLoaded", async () => {
   }
 
   if (dataChange == "3") {
-    const dataAll = await ipcRenderer.invoke("get-tree-data");
+    const dataAll = await ipcRenderer.invoke("get-three-data");
 
     if (dataAll == null) {
       document.getElementById("not-exist").style.display = "block";
@@ -493,8 +496,12 @@ window.addEventListener("DOMContentLoaded", async () => {
       let today = new Date();
 
       let current_day = today.getDate();
-      let current_month = today.getMonth();
+      let current_month = today.getMonth() + 1;
       let current_year = today.getFullYear();
+
+      if (current_day <= 9) {
+        current_day = "0" + current_day;
+      }
 
       if (current_month <= 9) {
         current_month = "0" + current_month;
@@ -502,9 +509,9 @@ window.addEventListener("DOMContentLoaded", async () => {
 
       let all =
         current_day.toString() +
-        "/" +
+        "-" +
         current_month.toString() +
-        "/" +
+        "-" +
         current_year.toString();
 
       thN.textContent = e._doc.name;
