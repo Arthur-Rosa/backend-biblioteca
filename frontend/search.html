@@ -83,7 +83,13 @@
     </div>
     <!-- end Modal edit button -->
     <!-- end Modal -->
-    <img class="img_logo" src="img/logo.png" draggable="false" />
+    <a href="index.html"
+      ><span
+        style="color: black; font-size: 18px; position: relative; left: 200px"
+        ><i class="fa-solid fa-house-chimney"></i> Todos</span
+      ></a
+    >
+    <img class="img_logo" src="img/logo.png" />
     <div class="container">
       <div class="content">
         <div class="button-group">
@@ -95,7 +101,7 @@
           </button> -->
         </div>
         <div class="card-group">
-          <div class="card card-hover-1">
+          <div class="card card-focus-1 card-hover-1">
             <a href="filtro3.html">
               <div class="flex">
                 <div class="icon" style="color: rgb(57, 136, 73)">
@@ -162,7 +168,6 @@
             <i class="fa-solid fa-magnifying-glass"></i> Buscar
           </button></a
         >
-
         <input
           type="search"
           placeholder="Faça sua Busca Aqui..."
@@ -176,10 +181,18 @@
       <div class="list">
         <hr />
         <div style="width: 100%" class="flex">
+          <!-- <div class="filtros" style="text-align: center">
+            <button class="filtro-btn-retirada">
+              <i class="fa-solid fa-truck-arrow-right"></i> Retiradas
+            </button>
+            <button class="filtro-btn-livros">
+              <i class="fa-solid fa-book"></i> Livros
+            </button>
+          </div> -->
           <div class="table">
             <h1 id="not-exist" style="display: none">Sem Dados</h1>
             <table>
-              <thead class="table_content">
+              <thead>
                 <tr>
                   <th>Nome</th>
                   <th>Sala</th>
@@ -191,12 +204,33 @@
                   <th>Excluir</th>
                 </tr>
               </thead>
-              <tbody id="tbody" class="list-object"></tbody>
+              <tbody id="tbody" class="list-object">
+                <!-- <tr>
+                  <td>João</td>
+                  <td>2B</td>
+                  <td>A História da Nanana</td>
+                  <td class="andamento" style="color: rgb(177, 177, 13)">
+                    Em Andamento
+                  </td>
+                  <td>24/08/2022</td>
+                  <td>14/09/2022</td>
+                  <td>
+                    <button class="edt-btn">
+                      <i class="fa-solid fa-pen-to-square"></i>
+                    </button>
+                  </td>
+                  <td>
+                    <button class="del-btn">
+                      <i class="fa-solid fa-trash"></i>
+                    </button>
+                  </td>
+                </tr> -->
+              </tbody>
             </table>
           </div>
         </div>
       </div>
     </div>
-    <h1 id="page" style="display: none">index</h1>
+    <h1 id="page" style="display: none">search</h1>
   </body>
 </html>

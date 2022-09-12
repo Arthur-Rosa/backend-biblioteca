@@ -11,7 +11,7 @@ a {
 }
 
 body {
-  overflow-y: hidden;
+  background-color: #78ceff;
 }
 
 .img_logo {
@@ -135,9 +135,6 @@ body {
   background: red;
 }
 
-body {
-  background-color: #78ceff;
-}
 .container {
   width: 80%;
   margin-left: auto;
@@ -260,7 +257,7 @@ body {
 .table {
   width: 80%;
   text-align: center;
-  overflow-y: scroll;
+  padding: 10px 0;
 }
 
 .filtros button {
@@ -313,22 +310,26 @@ th {
   color: white;
 }
 
-.table::-webkit-scrollbar {
-  width: 8px;
+.list-object {
+  overflow-y: scroll !important;
+}
+
+body::-webkit-scrollbar {
+  width: 10px;
   height: 8px;
 }
-.table::-webkit-scrollbar-track {
+body::-webkit-scrollbar-track {
   border-radius: 10px;
   background: rgba(0, 0, 0, 0.1);
 }
-.table::-webkit-scrollbar-thumb {
+body::-webkit-scrollbar-thumb {
   border-radius: 10px;
   background: rgba(0, 0, 0, 0.2);
 }
-.table::-webkit-scrollbar-thumb:hover {
+body::-webkit-scrollbar-thumb:hover {
   background: rgba(0, 0, 0, 0.4);
 }
-.table::-webkit-scrollbar-thumb:active {
+body::-webkit-scrollbar-thumb:active {
   background: rgba(0, 0, 0, 0.9);
 }
 

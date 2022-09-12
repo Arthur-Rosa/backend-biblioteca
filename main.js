@@ -214,13 +214,31 @@ ipcMain.handle("get-three-data", async (e, value) => {
   return data;
 });
 
+let searchStudent;
+
 ipcMain.on("search_student", async (e, value) => {
   const studentSearch = await Withdraw.find({ name: value });
   if (!studentSearch.length) {
     console.log("não achei nada");
     return null;
   }
-  return console.log(studentSearch);
+
+  searchStudent = studentSearch;
+  console.log("olha aqui aqui ", searchStudent);
+
+  return searchStudent;
+});
+
+ipcMain.handle("get-search-data", async () => {
+  const student = await Withdraw.find({ name: searchStudent[0].name });
+
+  if (!student.length) {
+    console.log("não há estudantes com esse nome");
+    return null;
+  }
+
+  console.log("olha o search aqui ", student);
+  return student;
 });
 
 ipcMain.on("data_student", async (e, value) => {
