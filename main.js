@@ -37,10 +37,10 @@ function createWindow() {
 
   win.once("ready-to-show", async () => {
     win.show();
-    /* 
+
     const menuTemplate = [];
     const menu = Menu.buildFromTemplate(menuTemplate);
-    Menu.setApplicationMenu(menu); */
+    Menu.setApplicationMenu(menu);
 
     const students = await Withdraw.find();
 
