@@ -133,28 +133,28 @@ window.addEventListener("DOMContentLoaded", async () => {
         window.location.reload();
       }
     });
+  } else {
+    document.getElementById("sendDataBook").addEventListener("click", () => {
+      if (
+        nameBook.value == "" ||
+        amoutBook.value == "" ||
+        autorBook.value  == "" ||
+        genderBook.value == ""
+      ) {
+        inputField.style.display = "block";
+  
+        setInterval(() => {
+          inputField.style.display = "none";
+        }, 3000);
+      } else {
+        ipcRenderer.send("data_book_create", sendDataBook());
+        window.location.reload();
+      }
+    });
   }
 
-  const buttonSendBook = document.querySelector("#sendDataBook");
 
-  buttonSendBook.addEventListener("click", () => {
-
-    if (
-      nameBook.value == "" ||
-      amoutBook.value == "" ||
-      autorBook.value  == "" ||
-      genderBook.value == ""
-    ) {
-      inputField.style.display = "block";
-
-      setInterval(() => {
-        inputField.style.display = "none";
-      }, 3000);
-    } else {
-      ipcRenderer.send("data_book_create", sendDataBook());
-      window.location.reload();
-    }
-  });
+    
 
   const dsh = await ipcRenderer.invoke("update_dashboard");
   console.log(dsh);
