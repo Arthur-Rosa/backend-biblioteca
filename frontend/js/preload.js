@@ -116,9 +116,7 @@ window.addEventListener("DOMContentLoaded", async () => {
   }
 
   if(!(dataChange == "book" || dataChange == "search_book")) {
-    const buttonSend = document.querySelector("#sendDataStudent");
-
-    buttonSend.addEventListener("click", () => {
+    document.getElementById("sendDataBook").addEventListener("click", () => {
       if (
         name_student.value == "" ||
         serie.value == "" ||
@@ -136,11 +134,6 @@ window.addEventListener("DOMContentLoaded", async () => {
       }
     });
   }
-
-
-
-
-  
 
   const buttonSendBook = document.querySelector("#sendDataBook");
 
