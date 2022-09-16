@@ -105,10 +105,10 @@ window.addEventListener("DOMContentLoaded", async () => {
 
   function sendDataBook() {
     data = {
-      name: value.nameBook,
-      amount: value.amoutBook,
-      autor: value.autorBook,
-      gender: value.genderBook,
+      name: nameBook.value,
+      amount: amoutBook.value,
+      autor: autorBook.value,
+      gender: genderBook.value,
     };
 
     toggleModal(modal);
@@ -116,7 +116,7 @@ window.addEventListener("DOMContentLoaded", async () => {
   }
 
   if(!(dataChange == "book" || dataChange == "search_book")) {
-    document.getElementById("sendDataBook").addEventListener("click", () => {
+    document.getElementById("sendDataStudent").addEventListener("click", () => {
       if (
         name_student.value == "" ||
         serie.value == "" ||
@@ -184,8 +184,6 @@ window.addEventListener("DOMContentLoaded", async () => {
     document.getElementById("conc").textContent = dsh.c;
   }
   }
-
-  
 
   document.getElementById("concEntrega").addEventListener("click", () => {
     dataEdit = {

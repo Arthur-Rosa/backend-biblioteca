@@ -40,9 +40,9 @@ function createWindow() {
   win.once("ready-to-show", async () => {
     win.show();
 
-    const menuTemplate = [];
+    /* const menuTemplate = [];
     const menu = Menu.buildFromTemplate(menuTemplate);
-    Menu.setApplicationMenu(menu);
+    Menu.setApplicationMenu(menu); */
 
     const students = await Withdraw.find();
 
@@ -291,14 +291,14 @@ ipcMain.on("data_student", async (e, value) => {
 });
 
 ipcMain.on("data_book_create", async (e, value) => {
-  console.log("estudante salvo", value);
+  console.log("book salvo", value);
 
   // Criando Book
-  const obj = new Withdraw({
+  const obj = new Book({
     name: value.name,
-    amount: value.serie,
-    autor: value.book,
-    gender: value.dateInit,
+    amount: value.amount,
+    autor: value.autor,
+    gender: value.gender,
   });
   try {
     const savedObj = await obj.save();
