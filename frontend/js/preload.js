@@ -115,25 +115,32 @@ window.addEventListener("DOMContentLoaded", async () => {
     return data;
   }
 
-  const buttonSend = document.querySelector("#sendDataStudent");
+  if(!(dataChange == "book" || dataChange == "search_book")) {
+    const buttonSend = document.querySelector("#sendDataStudent");
 
-  buttonSend.addEventListener("click", () => {
-    if (
-      name_student.value == "" ||
-      serie.value == "" ||
-      book.value == "" ||
-      finalDate.value == ""
-    ) {
-      inputField.style.display = "block";
+    buttonSend.addEventListener("click", () => {
+      if (
+        name_student.value == "" ||
+        serie.value == "" ||
+        book.value == "" ||
+        finalDate.value == ""
+      ) {
+        inputField.style.display = "block";
 
-      setInterval(() => {
-        inputField.style.display = "none";
-      }, 3000);
-    } else {
-      ipcRenderer.send("data_student", sendData());
-      window.location.reload();
-    }
-  });
+        setInterval(() => {
+          inputField.style.display = "none";
+        }, 3000);
+      } else {
+        ipcRenderer.send("data_student", sendData());
+        window.location.reload();
+      }
+    });
+  }
+
+
+
+
+  
 
   const buttonSendBook = document.querySelector("#sendDataBook");
 
