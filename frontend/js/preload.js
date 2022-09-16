@@ -153,14 +153,18 @@ window.addEventListener("DOMContentLoaded", async () => {
     });
   }
 
-
   
 
-
-
-  
-
-  const dsh = await ipcRenderer.invoke("update_dashboard");
+  if(dataChange == "book") {
+    const dshBook = await ipcRenderer.invoke("update_dashboard_book");
+    
+    if (dshBook.a == 0) {
+      document.getElementById("conc").textContent = "0";
+    } else {
+      document.getElementById("conc").textContent = dsh.a;
+    }
+  } else {
+    const dsh = await ipcRenderer.invoke("update_dashboard");
   console.log(dsh);
   if (dsh.a == 0) {
     document.getElementById("and").textContent = "0";
@@ -179,15 +183,6 @@ window.addEventListener("DOMContentLoaded", async () => {
   } else {
     document.getElementById("conc").textContent = dsh.c;
   }
-
-  if(dataChange == "book") {
-    const dshBook = await ipcRenderer.invoke("update_dashboard_book");
-    
-    if (dshBook.a == 0) {
-      document.getElementById("conc").textContent = "0";
-    } else {
-      document.getElementById("conc").textContent = dsh.a;
-    }
   }
 
   
