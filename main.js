@@ -4,6 +4,8 @@ const express = require("express");
 const path = require("path");
 const Withdraw = require("./config/db/models/Withdraw");
 
+const Book = require("./config/db/models/Book")
+
 const port = process.env.PORT || "3000";
 const App = express();
 
@@ -33,7 +35,7 @@ function createWindow() {
     },
   });
 
-  win.loadFile(path.join(__dirname, "frontend", "index.html"));
+  win.loadFile(path.join(__dirname, "frontend/withdraw/", "index.html"));
 
   win.once("ready-to-show", async () => {
     win.show();
@@ -117,6 +119,14 @@ ipcMain.handle("get-all-data", async (e, value) => {
   return data;
 });
 
+ipcMain.handle("get-all-data-book", async (e, value) => {
+  const data = await Book.find();
+  if (!data.length) {
+    return null;
+  }
+  return data;
+});
+
 ipcMain.handle("update_dashboard", async (e, value) => {
   try {
     const data = await Withdraw.find();
@@ -139,6 +149,23 @@ ipcMain.handle("update_dashboard", async (e, value) => {
       a: a,
       b: b,
       c: c,
+    };
+    return obj;
+  } catch (error) {
+    console.log("Erro ao mandar update_dashboard", error);
+    return;
+  }
+});
+
+ipcMain.handle("update_dashboard_book", async (e, value) => {
+  try {
+    const data = await Withdraw.find();
+    var a = 0;
+    data.forEach((ev) => {
+      a++;
+    });
+    var obj = {
+      a: a,
     };
     return obj;
   } catch (error) {
@@ -263,6 +290,26 @@ ipcMain.on("data_student", async (e, value) => {
   }
 });
 
+ipcMain.on("data_book_create", async (e, value) => {
+  console.log("estudante salvo", value);
+
+  // Criando Book
+  const obj = new Withdraw({
+    name: value.name,
+    amount: value.serie,
+    autor: value.book,
+    gender: value.dateInit,
+  });
+  try {
+    const savedObj = await obj.save();
+
+    return savedObj;
+  } catch (e) {
+    console.log("erro ao salvar estudante", e);
+    return;
+  }
+});
+
 // Update corrigido no front
 ipcMain.on("student_update", async (e, value) => {
   const student = await Withdraw.findOne({ name: value.nameUp });
@@ -279,11 +326,38 @@ ipcMain.on("student_update", async (e, value) => {
   }
 });
 
+ipcMain.on("bookUpdate", async (e, value) => {
+  const book = await Book.findOne({ name: value.nameBookUp });
+  try {
+    const bookUp = await Book.findByIdAndUpdate(book._id, {
+      name: value.nameBookUp,
+      amount: value.amountBookUp,
+      autor: value.autorBookUp,
+      gender: value.genderBookUp,
+    });
+  } catch (error) {
+    console.log("erro ao atualizar aluno");
+    return;
+  }
+});
+
 ipcMain.on("delete_student", async (e, value) => {
   const student = await Withdraw.findOne({ name: value });
   console.log(student);
   try {
     const delStudent = await Withdraw.findByIdAndDelete(student._id);
+    console.log("deletado!");
+  } catch (error) {
+    console.log("erro ao apagar aluno");
+    return;
+  }
+});
+
+ipcMain.on("delete_book", async (e, value) => {
+  const book = await Book.findOne({ name: value });
+  console.log(book);
+  try {
+    const delBook = await Book.findByIdAndDelete(book._id);
     console.log("deletado!");
   } catch (error) {
     console.log("erro ao apagar aluno");

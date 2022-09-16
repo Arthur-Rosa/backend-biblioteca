@@ -4,6 +4,12 @@ window.addEventListener("DOMContentLoaded", async () => {
   const closeModal = document.querySelector(".close");
   const modal = document.querySelector(".modal");
 
+  const nameBook = document.getElementById("nameBook");
+  const amoutBook = document.getElementById("amoutBook");
+  const autorBook = document.getElementById("autorBook");
+  const genderBook = document.getElementById("genderBook");
+      
+
   function toggleModal(modal) {
     if (modal.classList.contains("modal_close")) {
       modal.classList.remove("modal_close");
@@ -38,6 +44,7 @@ window.addEventListener("DOMContentLoaded", async () => {
   const finalDateEdit = document.querySelector("#finalDate_edit");
   const close_edit = document.querySelector("#close_edit");
   const update_student = document.querySelector("#sendDataChanged");
+  var dataChange = document.getElementById("page").textContent;
 
   let dataEdit;
 
@@ -96,6 +103,18 @@ window.addEventListener("DOMContentLoaded", async () => {
     return data;
   }
 
+  function sendDataBook() {
+    data = {
+      name: value.nameBook,
+      amount: value.amoutBook,
+      autor: value.autorBook,
+      gender: value.genderBook,
+    };
+
+    toggleModal(modal);
+    return data;
+  }
+
   const buttonSend = document.querySelector("#sendDataStudent");
 
   buttonSend.addEventListener("click", () => {
@@ -112,6 +131,27 @@ window.addEventListener("DOMContentLoaded", async () => {
       }, 3000);
     } else {
       ipcRenderer.send("data_student", sendData());
+      window.location.reload();
+    }
+  });
+
+  const buttonSendBook = document.querySelector("#sendDataBook");
+
+  buttonSendBook.addEventListener("click", () => {
+
+    if (
+      nameBook.value == "" ||
+      amoutBook.value == "" ||
+      autorBook.value  == "" ||
+      genderBook.value == ""
+    ) {
+      inputField.style.display = "block";
+
+      setInterval(() => {
+        inputField.style.display = "none";
+      }, 3000);
+    } else {
+      ipcRenderer.send("data_book_create", sendDataBook());
       window.location.reload();
     }
   });
@@ -136,6 +176,18 @@ window.addEventListener("DOMContentLoaded", async () => {
     document.getElementById("conc").textContent = dsh.c;
   }
 
+  if(dataChange == "book") {
+    const dshBook = await ipcRenderer.invoke("update_dashboard_book");
+    
+    if (dshBook.a == 0) {
+      document.getElementById("conc").textContent = "0";
+    } else {
+      document.getElementById("conc").textContent = dsh.a;
+    }
+  }
+
+  
+
   document.getElementById("concEntrega").addEventListener("click", () => {
     dataEdit = {
       nameUp: name_studentEdit.value,
@@ -147,8 +199,96 @@ window.addEventListener("DOMContentLoaded", async () => {
     window.location.reload();
   });
 
-  var dataChange = document.getElementById("page").textContent;
+  
   console.log(dataChange);
+
+  if (dataChange == "book") {
+    const dataAll = await ipcRenderer.invoke("get-all-data-book");
+
+    if (dataAll == null) {
+      document.querySelector("table").style.display = "none";
+      document.getElementById("not-exist").style.display = "block";
+    } else {
+      document.querySelector("table").style.display = "block";
+      document.getElementById("not-exist").style.display = "none";
+    }
+
+    dataAll.forEach((e) => {
+      console.log(e._doc);
+      const back = document.getElementById("tbody");
+      const t = document.createElement("tr");
+      // titulo
+      const thN = document.createElement("td");
+      // genero
+      const thS = document.createElement("td");
+      // quantidade
+      const thB = document.createElement("td");
+      // autor
+      const thSS = document.createElement("td");
+      // retirada date
+      //  const thRR = document.createElement("td");
+      // entrega date
+      // const thRE = document.createElement("td");
+
+      thN.textContent = e._doc.name;
+      thS.textContent = e._doc.gender;
+      thB.textContent = e._doc.amount;
+      thSS.textContent = e._doc.autor;
+
+      // thRR.textContent = e._doc.initD;
+      // thRE.textContent = e._doc.date;
+
+      const tdBtnEdit = document.createElement("td");
+      const buttonEdit = document.createElement("button");
+
+      const buttonDelete = document.createElement("button");
+      const tdBtnDelete = document.createElement("td");
+
+      buttonEdit.textContent = "Editar";
+      buttonEdit.setAttribute("class", "edt-btn");
+
+      buttonEdit.addEventListener("click", () => {
+        toggleModal(modal_edit);
+
+        nameBook.value = e._doc.name;
+        amoutBook.value = e._doc.amount;
+        autorBook.value = e._doc.autor;
+        genderBook.value = e._doc.gender;
+      });
+
+      update_student.addEventListener("click", () => {
+        dataBookEdit = {
+          nameBookUp: nameBook.value,
+          amountBookUp: amoutBook.value,
+          autorBookUp: autorBook.value,
+          genderBookUp: genderBook.value,
+        };
+
+        ipcRenderer.send("bookUpdate", dataBookEdit);
+        window.location.reload();
+      });
+
+      buttonDelete.textContent = "Apagar";
+      buttonDelete.setAttribute("class", "del-btn");
+
+      buttonDelete.addEventListener("click", () => {
+        ipcRenderer.send("delete_book", e._doc.name);
+        window.location.reload();
+      });
+
+      back.appendChild(t);
+      t.appendChild(thN);
+      t.appendChild(thS);
+      t.appendChild(thB);
+      t.appendChild(thSS);
+      // t.appendChild(thRR);
+      // t.appendChild(thRE);
+      t.appendChild(tdBtnEdit);
+      tdBtnEdit.appendChild(buttonEdit);
+      t.appendChild(tdBtnDelete);
+      tdBtnDelete.appendChild(buttonDelete);
+    });
+  }
 
   if (dataChange == "index") {
     const dataAll = await ipcRenderer.invoke("get-all-data");
@@ -695,4 +835,91 @@ window.addEventListener("DOMContentLoaded", async () => {
       tdBtnDelete.appendChild(buttonDelete);
     });
   }
-});
+
+  if (dataChange == "search_book") {
+
+    if (dataAll == null) {
+      document.querySelector("table").style.display = "none";
+      document.getElementById("not-exist").style.display = "block";
+    } else {
+      document.querySelector("table").style.display = "block";
+      document.getElementById("not-exist").style.display = "none";
+    }
+
+    dataAll.forEach((e) => {
+      console.log(e._doc);
+      const back = document.getElementById("tbody");
+      const t = document.createElement("tr");
+      // titulo
+      const thN = document.createElement("td");
+      // genero
+      const thS = document.createElement("td");
+      // quantidade
+      const thB = document.createElement("td");
+      // autor
+      const thSS = document.createElement("td");
+      // retirada date
+      //  const thRR = document.createElement("td");
+      // entrega date
+      // const thRE = document.createElement("td");
+
+      thN.textContent = e._doc.name;
+      thS.textContent = e._doc.gender;
+      thB.textContent = e._doc.amount;
+      thSS.textContent = e._doc.autor;
+
+      // thRR.textContent = e._doc.initD;
+      // thRE.textContent = e._doc.date;
+
+      const tdBtnEdit = document.createElement("td");
+      const buttonEdit = document.createElement("button");
+
+      const buttonDelete = document.createElement("button");
+      const tdBtnDelete = document.createElement("td");
+
+      buttonEdit.textContent = "Editar";
+      buttonEdit.setAttribute("class", "edt-btn");
+
+      buttonEdit.addEventListener("click", () => {
+        toggleModal(modal_edit);
+
+        nameBook.value = e._doc.name;
+        amoutBook.value = e._doc.amount;
+        autorBook.value = e._doc.autor;
+        genderBook.value = e._doc.gender;
+      });
+
+      update_student.addEventListener("click", () => {
+        dataBookEdit = {
+          nameBookUp: nameBook.value,
+          amountBookUp: amoutBook.value,
+          autorBookUp: autorBook.value,
+          genderBookUp: genderBook.value,
+        };
+
+        ipcRenderer.send("bookUpdate", dataBookEdit);
+        window.location.reload();
+      });
+
+      buttonDelete.textContent = "Apagar";
+      buttonDelete.setAttribute("class", "del-btn");
+
+      buttonDelete.addEventListener("click", () => {
+        ipcRenderer.send("delete_book", e._doc.name);
+        window.location.reload();
+      });
+
+      back.appendChild(t);
+      t.appendChild(thN);
+      t.appendChild(thS);
+      t.appendChild(thB);
+      t.appendChild(thSS);
+      // t.appendChild(thRR);
+      // t.appendChild(thRE);
+      t.appendChild(tdBtnEdit);
+      tdBtnEdit.appendChild(buttonEdit);
+      t.appendChild(tdBtnDelete);
+      tdBtnDelete.appendChild(buttonDelete);
+    });
+  }
+})

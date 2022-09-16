@@ -5,7 +5,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Projeto</title>
-    <link rel="stylesheet" href="css/style.css" />
+    <link rel="stylesheet" href="../css/style.css" />
     <link
       rel="stylesheet"
       href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.2/css/fontawesome.min.css"
@@ -83,25 +83,24 @@
     </div>
     <!-- end Modal edit button -->
     <!-- end Modal -->
-    <a href="index.html"
-      ><span
-        style="color: black; font-size: 18px; position: relative; left: 200px"
-        ><i class="fa-solid fa-house-chimney"></i> Todos</span
-      ></a
-    >
-    <img class="img_logo" src="img/logo.png" />
+    <img class="img_logo" src="../img/logo.png" draggable="false" />
     <div class="container">
       <div class="content">
         <div class="button-group">
           <button class="new-btn-retirada button_modal">
             <i class="fa-solid fa-list-check"></i> Nova Retirada
           </button>
+          <a href="../book/index.html">
+          <button class="new-btn-book button_modal">
+            <i class="fa-solid fa-book-open"></i> Ir Para Livros
+          </button>
+        </a>
           <!-- <button class="new-btn-book">
             <i class="fa-solid fa-book-open"></i> Novo Livro
           </button> -->
         </div>
         <div class="card-group">
-          <div class="card card-focus-1 card-hover-1">
+          <div class="card card-hover-1">
             <a href="filtro3.html">
               <div class="flex">
                 <div class="icon" style="color: rgb(57, 136, 73)">
@@ -121,7 +120,7 @@
             </a>
           </div>
 
-          <div class="card card-focus-2 card-hover-2">
+          <div class="card card-hover-2">
             <a href="filtro1.html">
               <div class="flex">
                 <div class="icon" style="color: rgb(177, 177, 13)">
@@ -168,6 +167,7 @@
             <i class="fa-solid fa-magnifying-glass"></i> Buscar
           </button></a
         >
+
         <input
           type="search"
           placeholder="Faça sua Busca Aqui..."
@@ -181,18 +181,10 @@
       <div class="list">
         <hr />
         <div style="width: 100%" class="flex">
-          <!-- <div class="filtros" style="text-align: center">
-            <button class="filtro-btn-retirada">
-              <i class="fa-solid fa-truck-arrow-right"></i> Retiradas
-            </button>
-            <button class="filtro-btn-livros">
-              <i class="fa-solid fa-book"></i> Livros
-            </button>
-          </div> -->
           <div class="table">
             <h1 id="not-exist" style="display: none">Sem Dados</h1>
             <table>
-              <thead>
+              <thead class="table_content">
                 <tr>
                   <th>Nome</th>
                   <th>Sala</th>
@@ -204,33 +196,12 @@
                   <th>Excluir</th>
                 </tr>
               </thead>
-              <tbody id="tbody" class="list-object">
-                <!-- <tr>
-                  <td>João</td>
-                  <td>2B</td>
-                  <td>A História da Nanana</td>
-                  <td class="andamento" style="color: rgb(177, 177, 13)">
-                    Em Andamento
-                  </td>
-                  <td>24/08/2022</td>
-                  <td>14/09/2022</td>
-                  <td>
-                    <button class="edt-btn">
-                      <i class="fa-solid fa-pen-to-square"></i>
-                    </button>
-                  </td>
-                  <td>
-                    <button class="del-btn">
-                      <i class="fa-solid fa-trash"></i>
-                    </button>
-                  </td>
-                </tr> -->
-              </tbody>
+              <tbody id="tbody" class="list-object"></tbody>
             </table>
           </div>
         </div>
       </div>
     </div>
-    <h1 id="page" style="display: none">1</h1>
+    <h1 id="page" style="display: none">index</h1>
   </body>
 </html>

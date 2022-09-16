@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Projeto</title>
+    <link rel="stylesheet" href="../css/style.css" />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.2/css/fontawesome.min.css"
+      integrity="sha512-R+xPS2VPCAFvLRy+I4PgbwkWjw1z5B5gNDYgJN5LfzV4gGNeRQyVrY7Uk59rX+c8tzz63j8DeZPLqmXvBxj8pA=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.2/css/all.min.css"
+      integrity="sha512-1sCRPdkRXhBV2PBLUdRb4tMg1w2YPf37qatUFeS7zlBy7jJI8Lf4VHwWfZZfpXtYSLy85pkm9GaYVYMfw5BC1A=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    />
+  </head>
+  <body>
+    <!-- Modal -->
+    <div class="modal modal_close">
+      <span class="close">X</span>
+      <div class="modal_content">
+        <!-- Validation error -->
+        <div class="unfield"><span>Preencha todos os campos</span></div>
+
+        <input type="text" placeholder="Nome do aluno" id="name_student" />
+        <input
+          type="text"
+          placeholder="Serie"
+          maxlength="2"
+          id="class_student"
+        />
+        <input type="text" placeholder="Nome do livro" id="book" />
+        <span>Data da devolução</span>
+        <input type="date" id="date" />
+        <button class="add_modal" id="sendDataStudent">Adicionar</button>
+      </div>
+    </div>
+    <!-- Modal edit button -->
+    <div class="modal_edit_container modal_close">
+      <span class="close_edit" id="close_edit"> X </span>
+      <div class="modal_edit">
+        <input
+          type="text"
+          id="name_edit"
+          placeholder="Editar nome do aluno"
+          disabled
+        />
+        <input
+          type="text"
+          id="serie_edit"
+          placeholder="Editar serie"
+          maxlength="2"
+        />
+        <input
+          type="text"
+          id="book_edit"
+          placeholder="Editar título do livro"
+        />
+        <span>Edite a data de entrega</span>
+        <input type="date" id="finalDate_edit" />
+        <button
+          id="concEntrega"
+          style="cursor: pointer"
+          class="update_modal update_modal_conc"
+        >
+          Concluir Entrega
+        </button>
+        <button
+          id="sendDataChanged"
+          style="cursor: pointer"
+          class="update_modal"
+        >
+          Atualizar
+        </button>
+      </div>
+    </div>
+    <!-- end Modal edit button -->
+    <!-- end Modal -->
+    <a href="index.html"
+      ><span
+        style="color: black; font-size: 18px; position: relative; left: 200px"
+        ><i class="fa-solid fa-house-chimney"></i> Todos</span
+      ></a
+    >
+    <img class="img_logo" src="../img/logo.png" />
+    <div class="container">
+      <div class="content">
+        <div class="button-group">
+          <button class="new-btn-retirada button_modal">
+            <i class="fa-solid fa-list-check"></i> Nova Retirada
+          </button>
+          <!-- <button class="new-btn-book">
+            <i class="fa-solid fa-book-open"></i> Novo Livro
+          </button> -->
+        </div>
+        <div class="card-group">
+          <div class="card card-hover-1">
+            <a href="filtro3.html">
+              <div class="flex">
+                <div class="icon" style="color: rgb(57, 136, 73)">
+                  <i class="fa-solid fa-book-bookmark"></i>
+                </div>
+                <div class="description">
+                  <ul class="ul-description">
+                    <li>Todos Devolvidos</li>
+                    <li
+                      class="edt"
+                      style="color: rgb(57, 136, 73)"
+                      id="conc"
+                    ></li>
+                  </ul>
+                </div>
+              </div>
+            </a>
+          </div>
+
+          <div class="card card-hover-2">
+            <a href="filtro1.html">
+              <div class="flex">
+                <div class="icon" style="color: rgb(177, 177, 13)">
+                  <i class="fa-solid fa-book-open-reader"></i>
+                </div>
+                <div class="description">
+                  <ul class="ul-description">
+                    <li>Em Andamento</li>
+                    <li
+                      class="edt"
+                      style="color: rgb(177, 177, 13)"
+                      id="and"
+                    ></li>
+                  </ul>
+                </div>
+              </div>
+            </a>
+          </div>
+
+          <div class="card card-focus-3 card-hover-3">
+            <a href="filtro2.html">
+              <div class="flex">
+                <div class="icon" style="color: rgb(143, 13, 13)">
+                  <i class="fa-solid fa-circle-exclamation"></i>
+                </div>
+                <div class="description">
+                  <ul class="ul-description">
+                    <li>Em Atraso</li>
+                    <li
+                      class="edt"
+                      style="color: rgb(143, 13, 13)"
+                      id="atr"
+                    ></li>
+                  </ul>
+                </div>
+              </div>
+            </a>
+          </div>
+        </div>
+      </div>
+      <div class="search">
+        <a href="search.html"
+          ><button class="search-button" id="search-button">
+            <i class="fa-solid fa-magnifying-glass"></i> Buscar
+          </button></a
+        >
+        <input
+          type="search"
+          placeholder="Faça sua Busca Aqui..."
+          id="inp_search"
+        />
+
+        <div class="refresh" onclick="window.location.reload()">
+          <i class="fa-solid fa-rotate-right"></i>
+        </div>
+      </div>
+      <div class="list">
+        <hr />
+        <div style="width: 100%" class="flex">
+          <!-- <div class="filtros" style="text-align: center">
+            <button class="filtro-btn-retirada">
+              <i class="fa-solid fa-truck-arrow-right"></i> Retiradas
+            </button>
+            <button class="filtro-btn-livros">
+              <i class="fa-solid fa-book"></i> Livros
+            </button>
+          </div> -->
+          <div class="table">
+            <h1 id="not-exist" style="display: none">Sem Dados</h1>
+            <table>
+              <thead>
+                <tr>
+                  <th>Nome</th>
+                  <th>Sala</th>
+                  <th>Nome do Livro</th>
+                  <th>Situação</th>
+                  <th>Data de Retirada</th>
+                  <th>Data de Entrega</th>
+                  <th>Editar</th>
+                  <th>Excluir</th>
+                </tr>
+              </thead>
+              <tbody id="tbody" class="list-object">
+                <!-- <tr>
+                  <td>João</td>
+                  <td>2B</td>
+                  <td>A História da Nanana</td>
+                  <td class="andamento" style="color: rgb(177, 177, 13)">
+                    Em Andamento
+                  </td>
+                  <td>24/08/2022</td>
+                  <td>14/09/2022</td>
+                  <td>
+                    <button class="edt-btn">
+                      <i class="fa-solid fa-pen-to-square"></i>
+                    </button>
+                  </td>
+                  <td>
+                    <button class="del-btn">
+                      <i class="fa-solid fa-trash"></i>
+                    </button>
+                  </td>
+                </tr> -->
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+    <h1 id="page" style="display: none">2</h1>
+  </body>
+</html>
