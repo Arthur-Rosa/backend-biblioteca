@@ -154,7 +154,11 @@ window.addEventListener("DOMContentLoaded", async () => {
   }
 
 
-    
+  
+
+
+
+  
 
   const dsh = await ipcRenderer.invoke("update_dashboard");
   console.log(dsh);
