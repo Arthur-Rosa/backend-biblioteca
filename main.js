@@ -4,7 +4,7 @@ const express = require("express");
 const path = require("path");
 const Withdraw = require("./config/db/models/Withdraw");
 
-const Book = require("./config/db/models/Book")
+const Book = require("./config/db/models/Book");
 
 const port = process.env.PORT || "3000";
 const App = express();
@@ -159,7 +159,7 @@ ipcMain.handle("update_dashboard", async (e, value) => {
 
 ipcMain.handle("update_dashboard_book", async (e, value) => {
   try {
-    const data = await Withdraw.find();
+    const data = await Book.find();
     var a = 0;
     data.forEach((ev) => {
       a++;
@@ -291,8 +291,6 @@ ipcMain.on("data_student", async (e, value) => {
 });
 
 ipcMain.on("data_book_create", async (e, value) => {
-  console.log("book salvo", value);
-
   // Criando Book
   const obj = new Book({
     name: value.name,
@@ -302,6 +300,7 @@ ipcMain.on("data_book_create", async (e, value) => {
   });
   try {
     const savedObj = await obj.save();
+    console.log("book salvo", value);
 
     return savedObj;
   } catch (e) {
@@ -335,6 +334,8 @@ ipcMain.on("bookUpdate", async (e, value) => {
       autor: value.autorBookUp,
       gender: value.genderBookUp,
     });
+
+    return bookUp;
   } catch (error) {
     console.log("erro ao atualizar aluno");
     return;
@@ -363,4 +364,29 @@ ipcMain.on("delete_book", async (e, value) => {
     console.log("erro ao apagar aluno");
     return;
   }
+});
+
+let searchBook;
+
+ipcMain.on("search_book", async (e, value) => {
+  const bookSearch = await Book.find({ name: value });
+  if (!bookSearch.length) {
+    console.log("Não achei o livro");
+    return null;
+  }
+  searchBook = bookSearch;
+  console.log("livro aqui ", searchBook);
+  return searchBook;
+});
+
+ipcMain.handle("get-search-book-data", async () => {
+  const book = await Book.find({ name: searchBook[0].name });
+
+  if (!book) {
+    console.log("não há livros com esse nome ");
+    return null;
+  }
+
+  console.log("olha o search book aqui! ", book);
+  return book;
 });

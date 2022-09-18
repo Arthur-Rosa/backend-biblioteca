@@ -8,7 +8,12 @@ window.addEventListener("DOMContentLoaded", async () => {
   const amoutBook = document.getElementById("amoutBook");
   const autorBook = document.getElementById("autorBook");
   const genderBook = document.getElementById("genderBook");
-      
+
+  const nameBookUp = document.getElementById("nameBookUp");
+  const amoutBookUp = document.getElementById("amoutBookUp");
+  const autorBookUp = document.getElementById("autorBookUp");
+  const genderBookUp = document.getElementById("genderBookUp");
+  const sendBookChanged = document.getElementById("sendDataBookChanged");
 
   function toggleModal(modal) {
     if (modal.classList.contains("modal_close")) {
@@ -44,6 +49,7 @@ window.addEventListener("DOMContentLoaded", async () => {
   const finalDateEdit = document.querySelector("#finalDate_edit");
   const close_edit = document.querySelector("#close_edit");
   const update_student = document.querySelector("#sendDataChanged");
+
   var dataChange = document.getElementById("page").textContent;
 
   let dataEdit;
@@ -77,18 +83,20 @@ window.addEventListener("DOMContentLoaded", async () => {
     current_day.toString();
 
   // search student
-  const inpSearch = document.querySelector("#inp_search");
-  const buttonSearch = document.querySelector("#search-button");
+  if (dataChange == "index") {
+    const inpSearch = document.querySelector("#inp_search");
+    const buttonSearch = document.querySelector("#search-button");
 
-  buttonSearch.addEventListener("click", () => {
-    const valueSearch = inpSearch.value;
+    buttonSearch.addEventListener("click", () => {
+      const valueSearch = inpSearch.value;
 
-    if (!valueSearch) {
-      return;
-    }
+      if (!valueSearch) {
+        return;
+      }
 
-    ipcRenderer.send("search_student", valueSearch);
-  });
+      ipcRenderer.send("search_student", valueSearch);
+    });
+  }
 
   function sendData() {
     data = {
@@ -115,7 +123,7 @@ window.addEventListener("DOMContentLoaded", async () => {
     return data;
   }
 
-  if(!(dataChange == "book" || dataChange == "search_book")) {
+  if (!(dataChange == "book" || dataChange == "search_book")) {
     document.getElementById("sendDataStudent").addEventListener("click", () => {
       if (
         name_student.value == "" ||
@@ -138,11 +146,11 @@ window.addEventListener("DOMContentLoaded", async () => {
       if (
         nameBook.value == "" ||
         amoutBook.value == "" ||
-        autorBook.value  == "" ||
+        autorBook.value == "" ||
         genderBook.value == ""
       ) {
         inputField.style.display = "block";
-  
+
         setInterval(() => {
           inputField.style.display = "none";
         }, 3000);
@@ -153,50 +161,51 @@ window.addEventListener("DOMContentLoaded", async () => {
     });
   }
 
-  
-
-  if(dataChange == "book") {
+  if (dataChange == "book") {
     const dshBook = await ipcRenderer.invoke("update_dashboard_book");
-    
+
     if (dshBook.a == 0) {
       document.getElementById("conc").textContent = "0";
     } else {
-      document.getElementById("conc").textContent = dsh.a;
+      document.getElementById("conc").textContent = dshBook.a;
     }
+  } else if (dataChange == "search_book") {
+    console.log("alguma coisa aqui");
   } else {
     const dsh = await ipcRenderer.invoke("update_dashboard");
-  console.log(dsh);
-  if (dsh.a == 0) {
-    document.getElementById("and").textContent = "0";
-  } else {
-    document.getElementById("and").textContent = dsh.a;
+    console.log(dsh);
+    if (dsh.a == 0) {
+      document.getElementById("and").textContent = "0";
+    } else {
+      document.getElementById("and").textContent = dsh.a;
+    }
+
+    if (dsh.b == 0) {
+      document.getElementById("atr").textContent = "0";
+    } else {
+      document.getElementById("atr").textContent = dsh.b;
+    }
+
+    if (dsh.c == 0) {
+      document.getElementById("conc").textContent = "0";
+    } else {
+      document.getElementById("conc").textContent = dsh.c;
+    }
   }
 
-  if (dsh.b == 0) {
-    document.getElementById("atr").textContent = "0";
-  } else {
-    document.getElementById("atr").textContent = dsh.b;
+  if (dataChange !== "book" && dataChange !== "search_book") {
+    document.getElementById("concEntrega").addEventListener("click", () => {
+      dataEdit = {
+        nameUp: name_studentEdit.value,
+        serieUp: serieEdit.value,
+        bookUp: bookEdit.value,
+        finalDateUp: finalDateEdit.value,
+      };
+      ipcRenderer.send("update_withdraw_status_conc", dataEdit);
+      window.location.reload();
+    });
   }
 
-  if (dsh.c == 0) {
-    document.getElementById("conc").textContent = "0";
-  } else {
-    document.getElementById("conc").textContent = dsh.c;
-  }
-  }
-
-  document.getElementById("concEntrega").addEventListener("click", () => {
-    dataEdit = {
-      nameUp: name_studentEdit.value,
-      serieUp: serieEdit.value,
-      bookUp: bookEdit.value,
-      finalDateUp: finalDateEdit.value,
-    };
-    ipcRenderer.send("update_withdraw_status_conc", dataEdit);
-    window.location.reload();
-  });
-
-  
   console.log(dataChange);
 
   if (dataChange == "book") {
@@ -209,6 +218,17 @@ window.addEventListener("DOMContentLoaded", async () => {
       document.querySelector("table").style.display = "block";
       document.getElementById("not-exist").style.display = "none";
     }
+
+    const inpSearchBook = document.getElementById("inp_search_book");
+    const btnSearchBook = document.getElementById("search_button_book");
+
+    btnSearchBook.addEventListener("click", () => {
+      if (!inpSearchBook.value) {
+        return;
+      }
+
+      ipcRenderer.send("search_book", inpSearchBook.value);
+    });
 
     dataAll.forEach((e) => {
       console.log(e._doc);
@@ -247,18 +267,18 @@ window.addEventListener("DOMContentLoaded", async () => {
       buttonEdit.addEventListener("click", () => {
         toggleModal(modal_edit);
 
-        nameBook.value = e._doc.name;
-        amoutBook.value = e._doc.amount;
-        autorBook.value = e._doc.autor;
-        genderBook.value = e._doc.gender;
+        nameBookUp.value = e._doc.name;
+        amoutBookUp.value = e._doc.amount;
+        autorBookUp.value = e._doc.autor;
+        genderBookUp.value = e._doc.gender;
       });
 
-      update_student.addEventListener("click", () => {
+      sendBookChanged.addEventListener("click", () => {
         dataBookEdit = {
-          nameBookUp: nameBook.value,
-          amountBookUp: amoutBook.value,
-          autorBookUp: autorBook.value,
-          genderBookUp: genderBook.value,
+          nameBookUp: nameBookUp.value,
+          amountBookUp: amoutBookUp.value,
+          autorBookUp: autorBookUp.value,
+          genderBookUp: genderBookUp.value,
         };
 
         ipcRenderer.send("bookUpdate", dataBookEdit);
@@ -834,8 +854,8 @@ window.addEventListener("DOMContentLoaded", async () => {
   }
 
   if (dataChange == "search_book") {
-
-    if (dataAll == null) {
+    const dataAll = await ipcRenderer.invoke("get-search-book-data");
+    if (!dataAll.length) {
       document.querySelector("table").style.display = "none";
       document.getElementById("not-exist").style.display = "block";
     } else {
@@ -880,18 +900,18 @@ window.addEventListener("DOMContentLoaded", async () => {
       buttonEdit.addEventListener("click", () => {
         toggleModal(modal_edit);
 
-        nameBook.value = e._doc.name;
-        amoutBook.value = e._doc.amount;
-        autorBook.value = e._doc.autor;
-        genderBook.value = e._doc.gender;
+        nameBookUp.value = e._doc.name;
+        amoutBookUp.value = e._doc.amount;
+        autorBookUp.value = e._doc.autor;
+        genderBookUp.value = e._doc.gender;
       });
 
-      update_student.addEventListener("click", () => {
+      sendBookChanged.addEventListener("click", () => {
         dataBookEdit = {
-          nameBookUp: nameBook.value,
-          amountBookUp: amoutBook.value,
-          autorBookUp: autorBook.value,
-          genderBookUp: genderBook.value,
+          nameBookUp: nameBookUp.value,
+          amountBookUp: amoutBookUp.value,
+          autorBookUp: autorBookUp.value,
+          genderBookUp: genderBookUp.value,
         };
 
         ipcRenderer.send("bookUpdate", dataBookEdit);
@@ -919,4 +939,4 @@ window.addEventListener("DOMContentLoaded", async () => {
       tdBtnDelete.appendChild(buttonDelete);
     });
   }
-})
+});

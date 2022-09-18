@@ -28,27 +28,19 @@
       <div class="modal_content">
         <div class="unfield"><span>Preencha todos os campos</span></div>
 
-        <input
-          type="text"
-          id="nameBook"
-          placeholder="Digite o nome do Livro"
-        />
+        <input type="text" id="nameBook" placeholder="Digite o nome do Livro" />
         <input
           type="text"
           id="amoutBook"
           placeholder="Digite a quantidade"
-          maxlength="2"
+          maxlength="3"
         />
         <input
           type="text"
           id="autorBook"
           placeholder="Digite o autor do Livro"
         />
-        <input
-          type="text"
-          id="genderBook"
-          placeholder="Digite o Genêro"
-          />
+        <input type="text" id="genderBook" placeholder="Digite o Genêro" />
         <button class="add_modal" id="sendDataBook">Adicionar</button>
       </div>
     </div>
@@ -58,28 +50,24 @@
       <div class="modal_edit">
         <input
           type="text"
-          id="nameBook"
+          id="nameBookUp"
           placeholder="Editar nome do Livro"
           disabled
         />
         <input
           type="text"
-          id="amoutBook"
+          id="amoutBookUp"
           placeholder="Editar quantidade"
-          maxlength="2"
+          maxlength="3"
         />
         <input
           type="text"
-          id="autorBook"
+          id="autorBookUp"
           placeholder="Editar autor do Livro"
         />
-        <input
-          type="text"
-          id="genderBook"
-          placeholder="Editar o Genêro"
-        />
+        <input type="text" id="genderBookUp" placeholder="Editar o Genêro" />
         <button
-          id="sendDataChanged"
+          id="sendDataBookChanged"
           style="cursor: pointer"
           class="update_modal"
         >
@@ -89,6 +77,12 @@
     </div>
     <!-- end Modal edit button -->
     <!-- end Modal -->
+    <a href="./index.html"
+      ><span
+        style="color: black; font-size: 18px; position: relative; left: 200px"
+        ><i class="fa-solid fa-house-chimney"></i> Voltar para livros</span
+      ></a
+    >
     <img class="img_logo" src="../img/logo.png" draggable="false" />
     <div class="container">
       <div class="content">
@@ -101,73 +95,30 @@
               <i class="fa-solid fa-list-check"></i> Ir Para Retiradas
             </button>
           </a>
-          <!-- <button class="new-btn-book">
-            <i class="fa-solid fa-book-open"></i> Novo Livro
-          </button> -->
         </div>
         <div class="card-group">
           <div class="card card-hover-1">
-              <div class="flex">
-                <div class="icon" style="color: rgb(57, 136, 73)">
-                  <i class="fa-solid fa-book-bookmark"></i>
-                </div>
-                <div class="description">
-                  <ul class="ul-description">
-                    <li>Todos os Livros</li>
-                    <li
-                      class="edt"
-                      style="color: rgb(57, 136, 73)"
-                      id="conc"
-                    ></li>
-                  </ul>
-                </div>
+            <div class="flex">
+              <div class="icon" style="color: rgb(57, 136, 73)">
+                <i class="fa-solid fa-book-bookmark"></i>
               </div>
+              <div class="description">
+                <ul class="ul-description">
+                  <li>Todos os Livros</li>
+                  <li
+                    class="edt"
+                    style="color: rgb(57, 136, 73)"
+                    id="conc"
+                  ></li>
+                </ul>
+              </div>
+            </div>
           </div>
-
-          <!-- <div class="card card-hover-2">
-            <a href="filtro1.html">
-              <div class="flex">
-                <div class="icon" style="color: rgb(177, 177, 13)">
-                  <i class="fa-solid fa-book-open-reader"></i>
-                </div>
-                <div class="description">
-                  <ul class="ul-description">
-                    <li>Em Andamento</li>
-                    <li
-                      class="edt"
-                      style="color: rgb(177, 177, 13)"
-                      id="and"
-                    ></li>
-                  </ul>
-                </div>
-              </div>
-            </a>
-          </div>
-
-          <div class="card card-hover-3">
-            <a href="filtro2.html">
-              <div class="flex">
-                <div class="icon" style="color: rgb(143, 13, 13)">
-                  <i class="fa-solid fa-circle-exclamation"></i>
-                </div>
-                <div class="description">
-                  <ul class="ul-description">
-                    <li>Em Atraso</li>
-                    <li
-                      class="edt"
-                      style="color: rgb(143, 13, 13)"
-                      id="atr"
-                    ></li>
-                  </ul>
-                </div>
-              </div>
-            </a>
-          </div> -->
         </div>
       </div>
       <div class="search">
         <a href="search.html"
-          ><button class="search-button" id="search-button">
+          ><button class="search-button" id="search_button_book">
             <i class="fa-solid fa-magnifying-glass"></i> Buscar
           </button></a
         >
@@ -175,7 +126,7 @@
         <input
           type="search"
           placeholder="Faça sua Busca Aqui..."
-          id="inp_search"
+          id="inp_search_book"
         />
 
         <div class="refresh" onclick="window.location.reload()">
