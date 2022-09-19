@@ -1,9 +1,9 @@
 <!DOCTYPE html>
-<html lang="pt-br">
-  <head>
-    <meta charset="UTF-8" />
-    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Projeto</title>
     <link rel="stylesheet" href="../css/style.css" />
     <link
@@ -20,94 +20,43 @@
       crossorigin="anonymous"
       referrerpolicy="no-referrer"
     />
-  </head>
-  <body>
-    <!-- Modal -->
-    <div class="modal modal_close">
-      <span class="close">X</span>
-      <div class="modal_content">
-        <!-- Validation error -->
-        <div class="unfield"><span>Preencha todos os campos</span></div>
+</head>
+<style>
+    .container-blocks{
+      display: block;
+    }
 
-        <input type="text" placeholder="Nome do aluno" id="name_student" />
-        <input
-          type="text"
-          placeholder="Serie"
-          maxlength="2"
-          id="class_student"
-        />
-        <input type="text" placeholder="Nome do livro" id="book" />
-        <span>Data da devolução</span>
-        <input type="date" id="date" />
-        <button class="add_modal" id="sendDataStudent">Adicionar</button>
-      </div>
-    </div>
-    <!-- Modal edit button -->
-    <div class="modal_edit_container modal_close">
-      <span class="close_edit" id="close_edit"> X </span>
-      <div class="modal_edit">
-        <input
-          type="text"
-          id="name_edit"
-          placeholder="Editar nome do aluno"
-          disabled
-        />
-        <input
-          type="text"
-          id="serie_edit"
-          placeholder="Editar serie"
-          maxlength="2"
-        />
-        <input
-          type="text"
-          id="book_edit"
-          placeholder="Editar título do livro"
-        />
-        <span>Edite a data de entrega</span>
-        <input type="date" id="finalDate_edit" />
-        <button
-          id="concEntrega"
-          style="cursor: pointer"
-          class="update_modal update_modal_conc"
-        >
-          Concluir Entrega
-        </button>
-        <button
-          id="sendDataChanged"
-          style="cursor: pointer"
-          class="update_modal"
-        >
-          Atualizar
-        </button>
-      </div>
-    </div>
-    <!-- end Modal edit button -->
-    <!-- end Modal -->
-    
-    <img class="img_logo" src="../img/logo.png" draggable="false" />
+    .container-blocks div {
+      width: 100%;
+      display: flex;
+      align-content: center;
+      align-items: center;
+      text-align: center;
+    }
+
+    .container-blocks div img {
+      border-radius: 50%;
+      display: block;
+      margin-left: 10%;
+    }
+</style>
+<body>
+    <img class="img_logo" src="../img/logo.png" />
     <div class="container">
       <div class="content">
         <div class="button-group">
-          <a href="criadores.html">
-            <button>
-              Criadores
-            </button>
-        </a>
-          <button class="new-btn-retirada button_modal">
+          <a href="index.html">
+            <button>Voltar ao inicio</button>
+          </a>
+          <!-- <button class="new-btn-retirada button_modal">
             <i class="fa-solid fa-list-check"></i> Nova Retirada
-          </button>
-          <a href="../book/index.html">
-          <button class="new-btn-book button_modal">
-            <i class="fa-solid fa-book-open"></i> Ir Para Livros
-          </button>
-          
-        </a>
+          </button> -->
           <!-- <button class="new-btn-book">
             <i class="fa-solid fa-book-open"></i> Novo Livro
           </button> -->
         </div>
-        <div class="card-group">
-          <div class="card card-hover-1">
+        <!-- <div class="card-group">
+          <div class="card card-focus-1 card-hover-1">
             <a href="filtro3.html">
               <div class="flex">
                 <div class="icon" style="color: rgb(57, 136, 73)">
@@ -127,7 +76,7 @@
             </a>
           </div>
 
-          <div class="card card-hover-2">
+          <div class="card card-focus-2 card-hover-2">
             <a href="filtro1.html">
               <div class="flex">
                 <div class="icon" style="color: rgb(177, 177, 13)">
@@ -166,21 +115,19 @@
               </div>
             </a>
           </div>
-        </div>
+        </div> -->
       </div>
       <div class="search">
-        <a href="search.html"
+<!--         <a href="search.html"
           ><button class="search-button" id="search-button">
             <i class="fa-solid fa-magnifying-glass"></i> Buscar
           </button></a
         >
-
         <input
           type="search"
           placeholder="Faça sua Busca Aqui..."
           id="inp_search"
-        />
-        
+        /> -->
         <div class="refresh" onclick="window.location.reload()">
           <i class="fa-solid fa-rotate-right"></i>
         </div>
@@ -188,10 +135,32 @@
       <div class="list">
         <hr />
         <div style="width: 100%" class="flex">
-          <div class="table">
+            <div class="container-blocks">
+              <div>
+                <h1>José Brito - Dev </h1>
+              <img src="../../assets/jose_img.jpeg" width="200" height="200" />
+              </div>
+              <div>
+                <h1>Murillo Lopes - Dev </h1>
+              <img src="../../assets/murillo_img.jpg" width="200" height="200" />
+              </div>
+              <div>
+                <h1>Arthur Rosa - Dev </h1>
+              <img src="../../assets/arthur_img.jpeg" width="200" height="200" />
+              </div>
+            </div>
+          <!-- <div class="filtros" style="text-align: center">
+            <button class="filtro-btn-retirada">
+              <i class="fa-solid fa-truck-arrow-right"></i> Retiradas
+            </button>
+            <button class="filtro-btn-livros">
+              <i class="fa-solid fa-book"></i> Livros
+            </button>
+          </div> -->
+          <!-- <div class="table">
             <h1 id="not-exist" style="display: none">Sem Dados</h1>
             <table>
-              <thead class="table_content">
+              <thead>
                 <tr>
                   <th>Nome</th>
                   <th>Sala</th>
@@ -203,12 +172,32 @@
                   <th>Excluir</th>
                 </tr>
               </thead>
-              <tbody id="tbody" class="list-object"></tbody>
-            </table>
+              <tbody id="tbody" class="list-object"> -->
+                <!-- <tr>
+                  <td>João</td>
+                  <td>2B</td>
+                  <td>A História da Nanana</td>
+                  <td class="andamento" style="color: rgb(177, 177, 13)">
+                    Em Andamento
+                  </td>
+                  <td>24/08/2022</td>
+                  <td>14/09/2022</td>
+                  <td>
+                    <button class="edt-btn">
+                      <i class="fa-solid fa-pen-to-square"></i>
+                    </button>
+                  </td>
+                  <td>
+                    <button class="del-btn">
+                      <i class="fa-solid fa-trash"></i>
+                    </button>
+                  </td>
+                </tr> -->
+              <!-- </tbody>
+            </table> -->
           </div>
         </div>
       </div>
     </div>
-    <h1 id="page" style="display: none">index</h1>
-  </body>
+</body>
 </html>

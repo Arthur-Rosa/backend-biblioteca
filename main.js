@@ -40,9 +40,10 @@ function createWindow() {
   win.once("ready-to-show", async () => {
     win.show();
 
-    /* const menuTemplate = [];
+    // faz menu desaparecer
+    const menuTemplate = [];
     const menu = Menu.buildFromTemplate(menuTemplate);
-    Menu.setApplicationMenu(menu); */
+    Menu.setApplicationMenu(menu);
 
     const students = await Withdraw.find();
 
@@ -326,7 +327,8 @@ ipcMain.on("student_update", async (e, value) => {
 });
 
 ipcMain.on("bookUpdate", async (e, value) => {
-  const book = await Book.findOne({ name: value.nameBookUp });
+  console.log(value)
+  const book = await Book.findOne({ name: value.nameToFind });
   try {
     const bookUp = await Book.findByIdAndUpdate(book._id, {
       name: value.nameBookUp,

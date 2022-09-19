@@ -275,6 +275,7 @@ window.addEventListener("DOMContentLoaded", async () => {
 
       sendBookChanged.addEventListener("click", () => {
         dataBookEdit = {
+          nameToFind: e._doc.name,
           nameBookUp: nameBookUp.value,
           amountBookUp: amoutBookUp.value,
           autorBookUp: autorBookUp.value,
